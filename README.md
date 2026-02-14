@@ -1,56 +1,73 @@
-# Khatakit
+# React + TypeScript + Vite
 
-**Free financial calculators for India. 100% browser-based. No data collection.**
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-[khatakit.in](https://khatakit.in)
+Currently, two official plugins are available:
 
----
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## Calculators
+## React Compiler
 
-| Calculator | Description |
-|---|---|
-| **GST Late Fee & Interest** | Calculate late filing fees (Section 47) and interest (Section 50) with turnover-based caps |
-| **Advance Tax** | Compute quarterly advance tax installments for FY 2025-26 under old and new regime |
-| **EMI Calculator** | Standard reducing-balance EMI with full amortization schedule |
-| **Presumptive Tax (44ADA/44AD)** | Estimate presumptive income for professionals and businesses |
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-## Privacy
+## Expanding the ESLint configuration
 
-- All calculations run 100% in your browser
-- No backend, no database, no API calls
-- No cookies, no analytics, no tracking
-- No login or signup required
-- Your financial data never leaves your device
+If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
 
-## Tech Stack
+```js
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
 
-- **Vite** + **React 19** + **TypeScript**
-- **Tailwind CSS** for styling
-- **Vitest** for testing
-- Deployed on **Netlify**
+      // Remove tseslint.configs.recommended and replace with this
+      tseslint.configs.recommendedTypeChecked,
+      // Alternatively, use this for stricter rules
+      tseslint.configs.strictTypeChecked,
+      // Optionally, add this for stylistic rules
+      tseslint.configs.stylisticTypeChecked,
 
-## Getting Started
-
-```bash
-# Clone
-git clone https://github.com/sagrkv/khatakit.git
-cd khatakit
-
-# Install
-npm install
-
-# Dev server
-npm run dev
-
-# Build
-npm run build
+      // Other configs...
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
 ```
 
-## License
+You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
-MIT
+```js
+// eslint.config.js
+import reactX from 'eslint-plugin-react-x'
+import reactDom from 'eslint-plugin-react-dom'
 
----
-
-Built for Indian freelancers, small businesses, and accountants.
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
+      // Enable lint rules for React
+      reactX.configs['recommended-typescript'],
+      // Enable lint rules for React DOM
+      reactDom.configs.recommended,
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
+```

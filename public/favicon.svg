@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" fill="none" stroke="#1976B8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Ledger book spine -->
+  <path d="M20 4 L20 36" />
+  <!-- Left page -->
+  <path d="M20 4 L6 7 L6 33 L20 36" />
+  <!-- Right page -->
+  <path d="M20 4 L34 7 L34 33 L20 36" />
+  <!-- Ledger lines on right page -->
+  <line x1="24" y1="14" x2="30" y2="14" />
+  <line x1="24" y1="20" x2="30" y2="20" />
+  <line x1="24" y1="26" x2="30" y2="26" />
+</svg>

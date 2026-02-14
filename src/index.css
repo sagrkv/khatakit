@@ -1,0 +1,48 @@
+@import 'tailwindcss';
+
+@theme {
+  /* Primary - Teal Blue */
+  --color-primary-50: #eff6ff;
+  --color-primary-100: #dbeafe;
+  --color-primary-200: #bfdbfe;
+  --color-primary-500: #2196d3;
+  --color-primary-600: #1976b8;
+  --color-primary-700: #1565a0;
+  --color-primary-900: #0d3b66;
+
+  /* Accent - Warm Amber */
+  --color-accent-400: #fbbf24;
+  --color-accent-500: #f59e0b;
+  --color-accent-600: #d97706;
+
+  /* Neutrals - Warm Gray */
+  --color-neutral-50: #fafafa;
+  --color-neutral-100: #f6f7fa;
+  --color-neutral-200: #e5e7eb;
+  --color-neutral-400: #9ca3af;
+  --color-neutral-600: #4b5563;
+  --color-neutral-800: #1f2937;
+  --color-neutral-950: #0a0a0a;
+
+  /* Semantic */
+  --color-success: #16a34a;
+  --color-error: #dc2626;
+  --color-info: #2563eb;
+
+  /* Fonts */
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--color-neutral-800);
+  background-color: var(--color-neutral-50);
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.font-tabular {
+  font-variant-numeric: tabular-nums;
+}
