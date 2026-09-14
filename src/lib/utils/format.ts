@@ -20,6 +20,11 @@ export function formatCurrency(amount: number): string {
   return '\u20B9 ' + formatIndianNumber(amount);
 }
 
+/** Rupees for prose, with no space after the symbol: "₹2,000". */
+export function formatRupeeText(amount: number): string {
+  return '₹' + formatIndianNumber(amount);
+}
+
 export function formatPercent(value: number, decimals: number = 2): string {
   return value.toFixed(decimals) + '%';
 }

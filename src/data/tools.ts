@@ -1,4 +1,10 @@
-import type { PageLoader } from '../seo/types';
+import type { Faq, PageLoader } from '../seo/types';
+import * as advanceTax from '../tools/advance-tax/faq';
+import * as emi from '../tools/emi/faq';
+import * as gstCalculator from '../tools/gst-calculator/faq';
+import * as gstLateFee from '../tools/gst-late-fee/faq';
+import * as presumptiveTax from '../tools/presumptive-tax/faq';
+import * as tdsInterest from '../tools/tds-interest/faq';
 
 /**
  * Tool catalogue. Each entry is also the registry entry for its calculator
@@ -13,6 +19,12 @@ export interface Tool {
   summary: string;
   seoTitle: string;
   seoDescription: string;
+  /** One or two sentences under the page heading that answer the core query with the rule and numbers. */
+  answer: string;
+  /** Questions shown on the page and published as FAQPage schema. Answers must follow the verified rules. */
+  faq: Faq[];
+  /** ISO date the rules were last checked against primary sources (docs/RULES-REVIEW.md). */
+  rulesReviewed: string;
   /** Page module exporting `Component`. */
   load: PageLoader;
   icon: string;
@@ -31,9 +43,12 @@ export const tools: Tool[] = [
     description:
       'Late fee under section 47 and interest under section 50 for GSTR-3B, GSTR-1 and GSTR-9, with turnover caps and the three-year filing limit.',
     summary: 'Work out the late fee and interest on a GSTR-3B, GSTR-1 or GSTR-9 filed late.',
-    seoTitle: 'GST Late Fee & Interest Calculator 2026 - GSTR-3B, GSTR-1, GSTR-9 - Khatakit',
+    seoTitle: 'GST Late Fee & Interest Calculator - GSTR-3B, GSTR-1, GSTR-9',
     seoDescription:
       'GST late fee and interest for GSTR-3B, GSTR-1 and GSTR-9. Turnover caps, nil returns, CGST and SGST split, dated workings and CSV download.',
+    answer: gstLateFee.ANSWER,
+    faq: gstLateFee.FAQ,
+    rulesReviewed: '2026-09-14',
     load: () => import('../tools/gst-late-fee/GstLateFee'),
     icon: 'receipt',
     category: 'gst',
@@ -63,6 +78,9 @@ export const tools: Tool[] = [
     seoTitle: 'GST Calculator - Add or Remove GST, Multiple Rates - Khatakit',
     seoDescription:
       'Add or remove GST on one amount or a whole bill with lines at 5%, 18% and 40%. CGST, SGST or IGST to the paisa, round-off shown, CSV download.',
+    answer: gstCalculator.ANSWER,
+    faq: gstCalculator.FAQ,
+    rulesReviewed: '2026-09-14',
     load: () => import('../tools/gst-calculator/GstCalculator'),
     icon: 'calculator',
     category: 'gst',
@@ -87,9 +105,12 @@ export const tools: Tool[] = [
     description:
       'Compute quarterly advance tax instalments for tax year 2026-27. Compare old vs new regime side by side, with slab-wise workings.',
     summary: 'Plan quarterly advance tax for tax year 2026-27 and compare the old and new regimes.',
-    seoTitle: 'Advance Tax Calculator Tax Year 2026-27 - Old & New Regime - Khatakit',
+    seoTitle: 'Advance Tax Calculator 2026-27 - Old & New Regime - Khatakit',
     seoDescription:
       'Calculate advance tax instalments for tax year 2026-27 (FY 2026-27). Old vs new regime, rebate near ₹12 lakh, due dates and CSV download.',
+    answer: advanceTax.ANSWER,
+    faq: advanceTax.FAQ,
+    rulesReviewed: '2026-09-14',
     load: () => import('../tools/advance-tax/AdvanceTax'),
     icon: 'calendar',
     category: 'income-tax',
@@ -112,9 +133,12 @@ export const tools: Tool[] = [
     description:
       'Calculate loan EMI using the reducing balance method. Year-wise amortisation, principal and interest chart, and monthly schedule download.',
     summary: 'Calculate the monthly EMI, total interest and repayment schedule for a loan.',
-    seoTitle: 'EMI Calculator - Loan EMI Calculator with Amortization - Khatakit',
+    seoTitle: 'EMI Calculator - Loan EMI with Amortization Schedule',
     seoDescription:
-      'Calculate loan EMI with the reducing balance method. Matches the RBI Key Facts Statement example. Amortisation schedule and CSV download.',
+      'Calculate loan EMI with the reducing balance method. Matches the RBI Key Facts Statement example, with an amortisation schedule and CSV download.',
+    answer: emi.ANSWER,
+    faq: emi.FAQ,
+    rulesReviewed: '2026-09-14',
     load: () => import('../tools/emi/EmiCalculator'),
     icon: 'banknotes',
     category: 'loans',
@@ -129,9 +153,12 @@ export const tools: Tool[] = [
     description:
       'Calculate presumptive income under section 58 (old 44AD for business, 44ADA for professionals). Turnover limits and tax estimate.',
     summary: 'Estimate income and tax under section 58 (old 44AD and 44ADA) for tax year 2026-27.',
-    seoTitle: 'Presumptive Tax Calculator - Section 58 (old 44ADA & 44AD) - Khatakit',
+    seoTitle: 'Presumptive Tax Calculator - 44AD, 44ADA, Section 58',
     seoDescription:
       'Calculate presumptive income under section 58 of the Income-tax Act, 2025 (old 44ADA for professionals and 44AD for businesses). 5% cash test and limits.',
+    answer: presumptiveTax.ANSWER,
+    faq: presumptiveTax.FAQ,
+    rulesReviewed: '2026-09-14',
     load: () => import('../tools/presumptive-tax/PresumptiveTax'),
     icon: 'briefcase',
     category: 'income-tax',
@@ -146,9 +173,12 @@ export const tools: Tool[] = [
     description:
       'Interest on TDS deducted late (1%) or deposited late (1.5%), for one case or many rows. Due dates, months counted and a CSV or Excel download.',
     summary: 'Work out interest on TDS deducted or deposited late, for one case or many rows.',
-    seoTitle: 'TDS Interest Calculator - Late Deduction & Late Deposit, Bulk Rows - Khatakit',
+    seoTitle: 'TDS Interest Calculator - Late Deduction & Late Deposit',
     seoDescription:
-      'Calculate TDS interest under section 201(1A) and section 398: 1% for late deduction, 1.5% for late deposit. Due dates, months by name, calendar and 30-day counts, CSV and Excel download.',
+      'TDS interest under section 201(1A) and section 398: 1% a month for late deduction, 1.5% for late deposit. Due dates, months counted, CSV and Excel download.',
+    answer: tdsInterest.ANSWER,
+    faq: tdsInterest.FAQ,
+    rulesReviewed: '2026-09-14',
     load: () => import('../tools/tds-interest/TdsInterest'),
     icon: 'clock',
     category: 'income-tax',
@@ -178,6 +208,9 @@ export const toolCategories = [
     description: 'Understand monthly payments and the cost of borrowing.',
   },
 ] as const;
+
+/** The most recent rules review across all calculators. */
+export const latestRulesReview = tools.map((tool) => tool.rulesReviewed).sort().at(-1)!;
 
 export function matchesTool(tool: Tool, query: string): boolean {
   const normalise = (value: string) =>

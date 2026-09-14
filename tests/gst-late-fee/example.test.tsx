@@ -54,7 +54,7 @@ describe('page content without any input', () => {
 
   it('shows the formula, rate table, edge cases and supported period', () => {
     renderPage();
-    const formula = screen.getByRole('region', { name: 'How the late fee and interest are calculated' });
+    const formula = screen.getByRole('region', { name: 'How are the GST late fee and interest calculated?' });
     expect(formula).toHaveTextContent('÷ 365');
     const rates = within(formula).getByRole('table');
     expect(rates).toHaveTextContent('0.04% of turnover in the State');

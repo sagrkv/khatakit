@@ -1,4 +1,4 @@
-// Renders public/og-image.png (1200x630) from the brand mark and tokens.
+// Renders public/og-image.png (1200x630) and public/logo.png (512x512) from the brand mark and tokens.
 // Run with `npm run og-image` after changing the brand; the PNG is committed.
 import { writeFile } from 'node:fs/promises';
 import { dirname, join, resolve } from 'node:path';
@@ -52,3 +52,14 @@ const png = new Resvg(svg, {
 
 await writeFile(join(root, 'public/og-image.png'), png);
 console.log('wrote public/og-image.png');
+
+// Square logo for structured data: the mark centred on paper.
+const logoSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 40 40">
+  <rect width="40" height="40" fill="${color.paper}"/>
+  <g transform="translate(4 4) scale(0.8)">${mark(1)}</g>
+</svg>`;
+
+const logoPng = new Resvg(logoSvg, { fitTo: { mode: 'width', value: 512 } }).render().asPng();
+
+await writeFile(join(root, 'public/logo.png'), logoPng);
+console.log('wrote public/logo.png');

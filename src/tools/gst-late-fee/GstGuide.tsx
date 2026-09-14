@@ -41,9 +41,10 @@ export default function GstGuide() {
   const cap = CAP_EXAMPLE;
   return (
     <CalculatorGuide title="GST late fee and interest rules">
-      <GuideSection title="How the late fee and interest are calculated">
+      <GuideSection title="How are the GST late fee and interest calculated?">
         <p>
-          Days late count from the day after the due date to the filing date. The late fee is
+          The late fee is a daily amount for each day late, up to a cap. Interest applies only to a
+          late GSTR-3B. Days late count from the day after the due date to the filing date. The late fee is
           charged per head: once under CGST and the same amount again under SGST or UTGST.
         </p>
         <Formula

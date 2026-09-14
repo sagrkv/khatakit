@@ -213,7 +213,7 @@ export default function Home() {
               </p>
             </div>
             <Link to="/about">
-              About the project <ToolIcon name="arrow" />
+              Who builds it and how rules are checked <ToolIcon name="arrow" />
             </Link>
           </section>
         </div>

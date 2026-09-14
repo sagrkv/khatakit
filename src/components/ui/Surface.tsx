@@ -3,14 +3,16 @@ import ToolIcon from './ToolIcon';
 export function Panel({
   title,
   icon,
+  id,
   children,
 }: {
   title?: string;
   icon?: string;
+  id?: string;
   children: ReactNode;
 }) {
   return (
-    <section className="panel">
+    <section className="panel" id={id}>
       {title && (
         <h2 className="panel-title">
           {icon && <ToolIcon name={icon} />} {title}
@@ -20,11 +22,12 @@ export function Panel({
     </section>
   );
 }
+/** Placeholder before a result. Plain text, so it stays out of the page outline. */
 export function EmptyState({ children }: { children: ReactNode }) {
   return (
     <div className="empty-state">
       <ToolIcon name="chart" />
-      <h2>Your results will appear here</h2>
+      <p className="empty-state-title">Your results will appear here</p>
       <p>{children}</p>
     </div>
   );

@@ -19,7 +19,8 @@ export default function EmiGuide() {
 
   return (
     <CalculatorGuide title="How the EMI is calculated">
-      <GuideSection title="Formula">
+      <GuideSection title="How is EMI calculated?">
+        <p>The EMI is a fixed monthly payment worked out by the reducing balance method.</p>
         <Formula
           where={
             <>
@@ -37,7 +38,11 @@ export default function EmiGuide() {
         </p>
       </GuideSection>
 
-      <GuideSection title="Rounding and the last instalment">
+      <GuideSection title="Why can a lender's EMI differ by a few rupees?">
+        <p>
+          Lenders may round the EMI up and adjust the last instalment. Rounding in the schedule also
+          moves figures by a rupee.
+        </p>
         <ul>
           <li>
             Amounts are rounded to the nearest rupee, with 50 paise or more rounded up, as in
@@ -55,10 +60,6 @@ export default function EmiGuide() {
             At 0%, {rupees(zero.input.principal)} over {zero.input.tenureMonths} months gives an
             EMI of {rupees(zero.emi)}. Seven rounded EMIs add up to{' '}
             {rupees(zero.sumOfRoundedEmis)}, but the total payable is {rupees(zero.totalPayable)}.
-          </li>
-          <li>
-            Lenders may round the EMI up and adjust the last instalment, so their figures can
-            differ by a few rupees.
           </li>
         </ul>
       </GuideSection>

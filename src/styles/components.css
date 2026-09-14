@@ -87,8 +87,17 @@ body {
   border-radius: var(--radius-sm);
   padding: var(--space-1) var(--space-2);
 }
-.page-masthead .period-badge {
+.masthead-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
   margin-top: var(--space-3);
+}
+.masthead-reviewed {
+  font-size: var(--type-small);
+  line-height: 1.5;
+  color: var(--warm-text);
 }
 
 /* Calculator layout. Split: inputs beside results. Stacked: inputs full width, results below. */
@@ -623,7 +632,7 @@ body {
   height: 22px;
   color: var(--action);
 }
-.empty-state h2 {
+.empty-state .empty-state-title {
   color: var(--ink);
   font-size: 0.9375rem;
   font-weight: 650;
@@ -859,7 +868,7 @@ body {
     margin-top: var(--space-2);
     line-height: 1.6;
   }
-  .page-masthead .period-badge {
+  .masthead-meta {
     margin-top: var(--space-2);
   }
   .panel {

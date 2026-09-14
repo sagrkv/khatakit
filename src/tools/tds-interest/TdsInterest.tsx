@@ -119,10 +119,7 @@ export function Component() {
 
   return (
     <CalculatorPage
-      title="TDS Interest Calculator"
-      description="Interest on TDS deducted late (1% a month) or deposited late (1.5% a month), for one case or many rows."
-      category="Income Tax"
-      icon="clock"
+      slug="tds-interest"
       period="Dates from 1 April 2021"
       layout={mode === 'single' ? 'split' : 'stacked'}
       formTitle={mode === 'single' ? 'TDS details' : 'Sheet settings'}

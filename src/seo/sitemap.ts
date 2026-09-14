@@ -7,7 +7,10 @@ const escapeXml = (value: string) =>
 export function buildSitemap(pages: Page[]): string {
   const urls = pages
     .filter((page) => page.sitemap && page.canonical)
-    .map((page) => `  <url>\n    <loc>${escapeXml(page.canonical!)}</loc>\n  </url>`);
+    .map((page) => {
+      const lastmod = page.lastModified ? `\n    <lastmod>${escapeXml(page.lastModified)}</lastmod>` : '';
+      return `  <url>\n    <loc>${escapeXml(page.canonical!)}</loc>${lastmod}\n  </url>`;
+    });
   return [
     '<?xml version="1.0" encoding="UTF-8"?>',
     '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',

@@ -7,6 +7,7 @@ import CalculatorGuide, {
 import RelatedTools from '../../components/calculator/RelatedTools';
 import { ADVANCE_TAX_SCHEDULE } from '../../lib/constants/tax-slabs';
 import { formatCurrency as rupees } from '../../lib/utils/format';
+import { SCHEDULE_TEXT } from './faq';
 import { REBATE_EXAMPLE as relief, SALARY_EXAMPLE as salary, WORKED_EXAMPLE as ex } from './example';
 
 const AMOUNT_COLUMNS = [
@@ -32,7 +33,11 @@ export default function AdvanceTaxGuide() {
 
   return (
     <CalculatorGuide title="How advance tax is worked out">
-      <GuideSection title="Formula">
+      <GuideSection title="How is advance tax calculated?">
+        <p>
+          Work out the tax for the year, take off TDS, and pay the balance in instalments by the due
+          dates.
+        </p>
         <Formula
           where={
             <>
@@ -52,7 +57,8 @@ export default function AdvanceTaxGuide() {
         </Formula>
       </GuideSection>
 
-      <GuideSection title="Due dates for tax year 2026-27">
+      <GuideSection title="When is advance tax due for tax year 2026-27?">
+        <p>Pay a total of {SCHEDULE_TEXT}.</p>
         <BreakdownTable
           columns={[
             { key: 'date', label: 'Pay by', align: 'left' },

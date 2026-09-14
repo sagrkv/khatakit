@@ -6,11 +6,16 @@ import Seo from '../../seo/Seo';
 import { usePage } from '../../seo/usePage';
 
 function ScrollToTop() {
-  const { pathname } = useLocation();
+  const { pathname, hash } = useLocation();
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
+
+  // A link such as /about#rules lands on that section after client navigation.
+  useEffect(() => {
+    if (hash) document.getElementById(hash.slice(1))?.scrollIntoView();
+  }, [pathname, hash]);
 
   return null;
 }

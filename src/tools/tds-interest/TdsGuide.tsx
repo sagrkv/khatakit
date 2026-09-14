@@ -17,7 +17,10 @@ const march = MARCH.result;
 export default function TdsGuide() {
   return (
     <CalculatorGuide title="How TDS interest is calculated">
-      <GuideSection title="Formula">
+      <GuideSection title="What are the TDS interest rates?">
+        <p>
+          Late deduction costs 1% a month and late deposit costs 1.5% a month, on the TDS amount.
+        </p>
         <Formula
           where={
             <>
@@ -40,7 +43,12 @@ export default function TdsGuide() {
         </ul>
       </GuideSection>
 
-      <GuideSection title="Due dates for depositing TDS">
+      <GuideSection title="When is TDS due for deposit?">
+        <p>
+          TDS deducted in any month is due by the 7th of the next month. TDS deducted in March is
+          due by 30 April, or by 7 April for a government office paying by challan. A government
+          office paying without a challan deposits it the same day.
+        </p>
         <BreakdownTable
           caption="Due dates by deductor"
           columns={[
@@ -89,7 +97,11 @@ export default function TdsGuide() {
         </ol>
       </GuideSection>
 
-      <GuideSection title="Calendar months or 30-day months">
+      <GuideSection title="Does TDS interest use calendar months or 30-day months?">
+        <p>
+          TRACES uses calendar months. Several tribunal rulings use 30-day months, so the calculator
+          shows both.
+        </p>
         <p>
           The TRACES help page counts calendar months from the day after deduction to the date of
           deposit. Its example: deducted 10 June 2023 and deposited 8 August 2023 is 3 months.

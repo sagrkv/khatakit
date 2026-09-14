@@ -20,10 +20,7 @@ export function Component() {
 
   return (
     <CalculatorPage
-      title="EMI Calculator"
-      description="Calculate monthly EMI, total interest and the loan repayment schedule."
-      category="Loans"
-      icon="banknotes"
+      slug="emi"
       formTitle="Loan details"
       form={<EmiForm form={form} errors={errors} onChange={setForm} />}
       hasResult={result !== null && Object.keys(errors).length === 0}

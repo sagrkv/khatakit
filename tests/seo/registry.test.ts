@@ -1,10 +1,13 @@
 import { describe, expect, it } from 'vitest';
 import { findPage, notFoundPage, pages } from '../../src/seo/pages';
-import { SITE_URL } from '../../src/seo/site';
+import { PUBLISHER, REPO_URL, SITE_URL } from '../../src/seo/site';
 import { tools } from '../../src/data/tools';
 
 type Schema = Record<string, unknown>;
 const schemaOfType = (jsonLd: Schema[], type: string) => jsonLd.find((item) => item['@type'] === type);
+
+const publisher = { '@type': 'Organization', name: PUBLISHER.name, url: PUBLISHER.url };
+const latestReview = tools.map((tool) => tool.rulesReviewed).sort().at(-1);
 
 describe('route registry', () => {
   it('gives every public page a title, description and absolute canonical', () => {
@@ -17,6 +20,16 @@ describe('route registry', () => {
     }
   });
 
+  it('keeps titles and descriptions to a length search results show in full', () => {
+    for (const page of [...pages, notFoundPage]) {
+      expect(page.title.length, page.title).toBeLessThanOrEqual(62);
+    }
+    for (const page of pages) {
+      expect(page.description.length, page.description).toBeGreaterThanOrEqual(120);
+      expect(page.description.length, page.description).toBeLessThanOrEqual(160);
+    }
+  });
+
   it('keeps paths, titles and descriptions unique', () => {
     const unique = (values: string[]) => new Set(values).size === values.length;
     expect(unique(pages.map((page) => page.path))).toBe(true);
@@ -24,9 +37,9 @@ describe('route registry', () => {
     expect(unique(pages.map((page) => page.description))).toBe(true);
   });
 
-  it('uses plain dashes in all metadata', () => {
+  it('uses plain dashes in all metadata and page copy data', () => {
     const emDash = String.fromCharCode(0x2014);
-    expect(JSON.stringify([...pages, notFoundPage])).not.toContain(emDash);
+    expect(JSON.stringify([...pages, notFoundPage, tools])).not.toContain(emDash);
   });
 
   it('registers every catalogue tool as a calculator page with WebApplication schema', () => {
@@ -36,6 +49,67 @@ describe('route registry', () => {
       const app = schemaOfType(page!.jsonLd, 'WebApplication');
       expect(app).toMatchObject({ name: tool.name, url: page!.canonical });
     }
+  });
+
+  it('dates each calculator page from the rules review date in the catalogue', () => {
+    for (const tool of tools) {
+      expect(tool.rulesReviewed).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+      const page = findPage(tool.path);
+      expect(page.lastModified).toBe(tool.rulesReviewed);
+      expect(schemaOfType(page.jsonLd, 'WebApplication')).toMatchObject({
+        dateModified: tool.rulesReviewed,
+      });
+    }
+    expect(findPage('/').lastModified).toBe(latestReview);
+    expect(findPage('/about').lastModified).toBe(latestReview);
+    expect(notFoundPage.lastModified).toBeNull();
+  });
+
+  it('publishes each calculator FAQ as FAQPage schema with the same text', () => {
+    for (const tool of tools) {
+      expect(tool.faq.length, tool.slug).toBeGreaterThanOrEqual(3);
+      expect(tool.faq.length, tool.slug).toBeLessThanOrEqual(5);
+      expect(tool.answer.length, tool.slug).toBeGreaterThan(80);
+      expect(schemaOfType(findPage(tool.path).jsonLd, 'FAQPage')).toEqual({
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: tool.faq.map(({ question, answer }) => ({
+          '@type': 'Question',
+          name: question,
+          acceptedAnswer: { '@type': 'Answer', text: answer },
+        })),
+      });
+    }
+    for (const page of [findPage('/'), findPage('/about')]) {
+      expect(schemaOfType(page.jsonLd, 'FAQPage')).toBeUndefined();
+    }
+  });
+
+  it('names filtercoffee.dev as the publisher of the site and every calculator', () => {
+    for (const page of pages) {
+      expect(schemaOfType(page.jsonLd, 'Organization'), page.path).toEqual({
+        '@context': 'https://schema.org',
+        '@type': 'Organization',
+        name: 'Khatakit',
+        url: `${SITE_URL}/`,
+        logo: `${SITE_URL}/logo.png`,
+        sameAs: [REPO_URL],
+        parentOrganization: publisher,
+      });
+      expect(schemaOfType(page.jsonLd, 'WebSite'), page.path).toMatchObject({
+        name: 'Khatakit',
+        url: `${SITE_URL}/`,
+        publisher,
+      });
+    }
+    for (const tool of tools) {
+      expect(schemaOfType(findPage(tool.path).jsonLd, 'WebApplication')).toMatchObject({
+        publisher,
+        creator: publisher,
+      });
+    }
+    expect(PUBLISHER).toEqual({ name: 'filtercoffee.dev', url: 'https://filtercoffee.dev' });
+    expect(REPO_URL).toBe('https://github.com/sagrkv/khatakit');
   });
 
   it('lists every calculator on the home page collection', () => {

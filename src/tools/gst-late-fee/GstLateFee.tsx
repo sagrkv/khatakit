@@ -62,11 +62,7 @@ export function Component() {
 
   return (
     <CalculatorPage
-      title="GST Late Fee & Interest Calculator"
-      description="Work out the late fee and interest on a late GSTR-3B, GSTR-1 or GSTR-9, with the dates used, the caps and the CGST and SGST split."
-      category="GST"
-      icon="receipt"
-      period="Rules as at September 2026"
+      slug="gst-late-fee"
       formTitle="Return details"
       form={<GstForm input={input} errors={validation.errors} onChange={setInput} />}
       hasResult={result !== null && validation.input !== null}

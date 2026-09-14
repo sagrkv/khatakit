@@ -21,16 +21,13 @@ All raw UI colours belong in `tokens.css`. Components must use semantic variable
 
 ## Page composition
 
-`PageShell` provides the container, breadcrumb, icon, heading, description and optional supported-period badge. Its `reading` variant provides a narrower layout for About and the missing-page screen.
+`PageShell` provides the container, breadcrumb, icon, heading, description, optional supported-period badge and optional "Rules last reviewed" date. Its `reading` variant provides a narrower layout for About and the missing-page screen.
 
-`CalculatorPage` composes `PageShell` with the shared input panel, results area, a one-line caveat under a result, the "See result" jump link and the guide. A tool page supplies content and calculation state:
+`CalculatorPage` composes `PageShell` with the shared input panel, results area, a one-line caveat under a result, the "See result" jump link, the guide and the FAQ. It reads the heading, direct answer, category, icon, review date and FAQ from the tool's entry in `src/data/tools.ts`, found by `slug`. A tool page supplies content and calculation state:
 
 ```tsx
 <CalculatorPage
-  title="Example calculator"
-  description="A short explanation of the task."
-  category="Accounting"
-  icon="briefcase"
+  slug="example"
   formTitle="Your details"
   form={<ExampleForm input={input} onChange={setInput} />}
   hasResult={result !== null}

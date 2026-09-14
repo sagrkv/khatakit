@@ -1,6 +1,7 @@
 import { Fragment, type ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import ToolIcon from '../ui/ToolIcon';
+import { formatLongDate } from '../../lib/utils/date';
 import { usePage } from '../../seo/usePage';
 interface Props {
   title: string;
@@ -10,6 +11,8 @@ interface Props {
   children: ReactNode;
   reading?: boolean;
   period?: string;
+  /** ISO date the rules on this page were last reviewed. */
+  reviewed?: string;
 }
 export default function PageShell({
   title,
@@ -19,6 +22,7 @@ export default function PageShell({
   children,
   reading = false,
   period,
+  reviewed,
 }: Props) {
   const { trail } = usePage();
   return (
@@ -47,7 +51,16 @@ export default function PageShell({
           {eyebrow && <p className="eyebrow">{eyebrow}</p>}
           <h1>{title}</h1>
           <p className="page-description">{description}</p>
-          {period && <span className="period-badge">{period}</span>}
+          {(period || reviewed) && (
+            <div className="masthead-meta">
+              {period && <span className="period-badge">{period}</span>}
+              {reviewed && (
+                <p className="masthead-reviewed">
+                  Rules last reviewed: <time dateTime={reviewed}>{formatLongDate(reviewed)}</time>
+                </p>
+              )}
+            </div>
+          )}
         </div>
       </header>
       {children}

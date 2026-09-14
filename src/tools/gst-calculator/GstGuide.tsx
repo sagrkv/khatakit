@@ -66,7 +66,11 @@ const references = [
 export default function GstGuide() {
   return (
     <CalculatorGuide title="How GST is worked out">
-      <GuideSection title="Formula">
+      <GuideSection title="How do you add or remove GST?">
+        <p>
+          To add GST, multiply the amount by the rate. To remove GST, divide the amount including
+          GST by 1 plus the rate.
+        </p>
         <p>For an amount excluding GST (add GST):</p>
         <Formula where={<>Each tax is rounded to the paisa.</>}>
           Taxable value = amount
@@ -96,16 +100,13 @@ export default function GstGuide() {
         </p>
       </GuideSection>
 
-      <GuideSection title="Rounding method">
+      <GuideSection title="How is GST rounded to the paisa?">
         <p>
-          This is the method Khatakit uses. The CGST Act does not say how to round paise on each
-          invoice line.
+          Each tax is rounded to the paisa, and half a paisa rounds up. The CGST Act does not say
+          how to round paise on each invoice line, so this is the method Khatakit uses.
         </p>
         <ul>
-          <li>
-            Tax is worked out on each line, then added up. Each tax is rounded to the paisa, and
-            half a paisa rounds up.
-          </li>
+          <li>Tax is worked out on each line, then added up.</li>
           <li>
             CGST and SGST are each rounded, so they are always equal and always add up to the tax
             shown.

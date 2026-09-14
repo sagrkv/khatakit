@@ -24,10 +24,7 @@ export function Component() {
 
   return (
     <CalculatorPage
-      title="Advance Tax Calculator"
-      description="Plan quarterly advance tax payments and compare the old and new tax regimes."
-      category="Income Tax"
-      icon="calendar"
+      slug="advance-tax"
       period={TAX_YEAR_LABEL}
       formTitle="Income details"
       form={<AdvanceTaxForm form={form} errors={errors} onChange={setForm} />}

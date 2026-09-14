@@ -22,10 +22,7 @@ export function Component() {
 
   return (
     <CalculatorPage
-      title="Presumptive Tax Calculator"
-      description="Estimate presumptive income for professionals and businesses under section 58 (old 44ADA and 44AD)."
-      category="Income Tax"
-      icon="briefcase"
+      slug="presumptive-tax"
       period={TAX_YEAR_LABEL}
       formTitle={form.scheme === '44ADA' ? 'Professional details' : 'Business details'}
       form={<PresumptiveForm input={form} errors={errors} onChange={setForm} />}

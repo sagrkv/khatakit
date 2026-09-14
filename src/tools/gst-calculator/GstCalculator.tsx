@@ -20,10 +20,7 @@ export function Component() {
 
   return (
     <CalculatorPage
-      title="GST Calculator"
-      description="Add GST to a price or take it out, for one amount or a whole bill at different rates. CGST and SGST or IGST to the paisa."
-      category="GST"
-      icon="calculator"
+      slug="gst-calculator"
       period="GST rates from 1 February 2026"
       formTitle="Bill details"
       form={<GstBillForm form={form} validation={validation} onChange={setForm} />}

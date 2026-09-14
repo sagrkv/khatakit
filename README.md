@@ -101,7 +101,9 @@ Build the calculator's citations in `src/lib/legal/citations/<your-tool>.ts` and
 
 Step four: add one entry to `src/data/tools.ts`.
 It holds the name, path, SEO title and description, category, and a `load` function that imports the page module.
-The route, head tags, breadcrumbs, JSON-LD, homepage listing, prerendered HTML and sitemap entry all come from this entry.
+It also holds the direct answer shown under the heading, the FAQ, and the date the rules were last reviewed.
+Keep the answer and FAQ in `src/tools/<your-tool>/faq.ts`, built from the verified constants where you can.
+The route, head tags, breadcrumbs, JSON-LD, FAQ schema, homepage listing, prerendered HTML and sitemap entry with its last-modified date all come from this entry.
 
 Step five: add tests in `tests/<your-tool>/`.
 Add the page's expected heading to `tests/seo/prerender.test.ts`.

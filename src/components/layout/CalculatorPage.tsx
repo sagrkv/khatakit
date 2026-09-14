@@ -1,15 +1,15 @@
 import type { ReactNode } from 'react';
-import PageShell from './PageShell';
+import { toolCategories, tools } from '../../data/tools';
+import CalculatorFaq from '../calculator/CalculatorFaq';
 import ResultJump from '../calculator/ResultJump';
 import { Panel } from '../ui/Surface';
+import PageShell from './PageShell';
 
 const RESULTS_ID = 'results';
 
 interface Props {
-  title: string;
-  description: string;
-  category: string;
-  icon: string;
+  /** Catalogue slug. Name, direct answer, category, icon, review date and FAQ come from src/data/tools.ts. */
+  slug: string;
   period?: string;
   formTitle: string;
   form: ReactNode;
@@ -25,10 +25,7 @@ interface Props {
 }
 
 export default function CalculatorPage({
-  title,
-  description,
-  category,
-  icon,
+  slug,
   period,
   formTitle,
   form,
@@ -38,17 +35,22 @@ export default function CalculatorPage({
   layout = 'split',
   guide,
 }: Props) {
+  const tool = tools.find((item) => item.slug === slug);
+  if (!tool) throw new Error(`No catalogue entry for calculator "${slug}"`);
+  const category = toolCategories.find((item) => item.id === tool.category)?.label;
+
   return (
     <PageShell
-      title={title}
-      description={description}
+      title={tool.name}
+      description={tool.answer}
       eyebrow={category}
-      icon={icon}
+      icon={tool.icon}
       period={period}
+      reviewed={tool.rulesReviewed}
     >
       <div className={`calculator-layout calculator-layout-${layout}`}>
         <aside className="calculator-inputs">
-          <Panel title={formTitle} icon={icon}>
+          <Panel title={formTitle} icon={tool.icon}>
             {form}
             <p className="local-note">Calculations stay in your browser.</p>
           </Panel>
@@ -73,6 +75,7 @@ export default function CalculatorPage({
       <div id="guide" className="guide-anchor">
         {guide}
       </div>
+      <CalculatorFaq items={tool.faq} />
     </PageShell>
   );
 }

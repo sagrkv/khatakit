@@ -142,6 +142,28 @@
   line-height: 1.6;
 }
 
+/* Frequently asked questions under the guide. */
+.faq-item + .faq-item {
+  margin-top: var(--space-5);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--border);
+}
+.faq-item .section-title {
+  margin-bottom: var(--space-2);
+}
+.faq-item p {
+  font-size: 0.9375rem;
+  line-height: 1.75;
+}
+.guide-trust {
+  font-size: var(--type-small);
+  line-height: 1.7;
+  color: var(--muted);
+}
+.guide-trust a {
+  color: var(--action);
+}
+
 .year-chart {
   margin: 0;
 }

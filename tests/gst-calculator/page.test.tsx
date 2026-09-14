@@ -65,8 +65,8 @@ describe('GST calculator page', () => {
     const guide = $('.calculator-guide')!;
     expect(guide.querySelector('h2')!.textContent).toBe('How GST is worked out');
     expect(Array.from(guide.querySelectorAll('h3'), (heading) => heading.textContent)).toEqual([
-      'Formula',
-      'Rounding method',
+      'How do you add or remove GST?',
+      'How is GST rounded to the paisa?',
       'Worked example',
       'Edge cases',
       'Assumptions',

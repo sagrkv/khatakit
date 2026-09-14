@@ -22,7 +22,11 @@ export default function PresumptiveGuide() {
 
   return (
     <CalculatorGuide title="How presumptive income is worked out">
-      <GuideSection title="Formula">
+      <GuideSection title="How is presumptive income calculated?">
+        <p>
+          A business declares 6% of bank and online receipts plus 8% of other receipts as income. A
+          professional declares 50% of gross receipts.
+        </p>
         <Formula
           where={
             <>
@@ -42,7 +46,12 @@ export default function PresumptiveGuide() {
         </p>
       </GuideSection>
 
-      <GuideSection title="Turnover limits">
+      <GuideSection title="What are the turnover limits for 44AD and 44ADA?">
+        <p>
+          A business can use the scheme up to ₹2 crore of turnover, and a professional up to ₹50
+          lakh of gross receipts. When cash receipts are 5% or less, the limits are ₹3 crore and ₹75
+          lakh.
+        </p>
         <BreakdownTable
           columns={[
             { key: 'scheme', label: 'Scheme', align: 'left' },

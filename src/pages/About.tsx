@@ -3,7 +3,12 @@ import PageShell from '../components/layout/PageShell';
 import { Panel } from '../components/ui/Surface';
 import Disclaimer from '../components/ui/Disclaimer';
 import ToolIcon from '../components/ui/ToolIcon';
-import { tools } from '../data/tools';
+import { latestRulesReview, tools } from '../data/tools';
+import { formatLongDate } from '../lib/utils/date';
+import { ISSUES_URL, PUBLISHER, REPO_URL, RULES_REVIEW_URL } from '../seo/site';
+
+const reviewed = formatLongDate(latestRulesReview);
+
 export default function About() {
   return (
     <>
@@ -24,6 +29,42 @@ export default function About() {
               <p>
                 Each calculator shows its workings, assumptions and sources. The calculators are
                 free to use and do not require an account.
+              </p>
+            </div>
+          </Panel>
+          <Panel title="Who builds Khatakit?" icon="info">
+            <div className="prose">
+              <p>
+                Khatakit is built and maintained by Sagar at{' '}
+                <a href={PUBLISHER.url} target="_blank" rel="noopener noreferrer">
+                  filtercoffee.dev
+                </a>
+                . Sagar is an independent developer.
+              </p>
+              <p>
+                Khatakit is free and open source under the MIT licence. It has no accounts, no
+                analytics, no tracking and no cookies.
+              </p>
+            </div>
+          </Panel>
+          <Panel title="How the rules are checked" icon="check" id="rules">
+            <div className="prose">
+              <p>
+                Every rate, limit, due date and formula comes from a primary source: the Act, the
+                Gazette notification, a CBIC or CBDT circular, or an RBI document. Blog posts and
+                other calculators do not count as sources.
+              </p>
+              <p>
+                Each calculator lists its sources under References in its guide. Tests check the
+                calculations, and the worked examples in each guide, against the calculator code.
+              </p>
+              <p>
+                The{' '}
+                <a href={RULES_REVIEW_URL} target="_blank" rel="noopener noreferrer">
+                  rules review record on GitHub
+                </a>{' '}
+                lists each rule, the source it was checked against and the date of the check. The
+                rules were last reviewed on {reviewed}.
               </p>
             </div>
           </Panel>
@@ -73,42 +114,37 @@ export default function About() {
               </ul>
             </div>
           </Panel>
-          <Panel title="Source code and contributions" icon="info">
+          <Panel title="Report an error" icon="info">
             <div className="prose">
               <p>
-                We’re building Khatakit as an open-source project. You can inspect the source,
-                suggest useful tools and help improve the calculations, explanations or
-                accessibility.
+                If a figure looks wrong, open an issue on GitHub. Include the calculator name, the
+                period and a made-up example. Keep personal financial records out of public issues.
               </p>
-              <p>
-                When reporting a calculation issue, include the tool name, relevant period and a
-                made-up example. Keep personal financial records out of public issues.
-              </p>
+              <p>The source code is public. Corrections, suggestions and pull requests are welcome.</p>
             </div>
             <div className="page-actions">
               <a
                 className="button button-primary"
-                href="https://github.com/sagrkv/khatakit"
+                href={ISSUES_URL}
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                View the project <ToolIcon name="arrow" />
+                Report an error <ToolIcon name="arrow" />
               </a>
               <a
                 className="button button-secondary"
-                href="https://github.com/sagrkv/khatakit/issues"
+                href={REPO_URL}
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Report an issue
+                Source code on GitHub
               </a>
             </div>
           </Panel>
-          <Disclaimer title="Scope and limitations">
-            The tools provide estimates and educational information. Check each calculator’s
-            supported period, assumptions and source references. Tax rules and individual
-            circumstances can differ; consult a qualified professional for decisions about your
-            obligations.
+          <Disclaimer title="Not tax advice">
+            Khatakit is not tax advice, legal advice or financial advice. The calculators give
+            estimates based on the rules as read on {reviewed}. Check the figures with a chartered
+            accountant or the official portal before you file or pay.
           </Disclaimer>
         </div>
       </PageShell>

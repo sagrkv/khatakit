@@ -1,6 +1,13 @@
 import { matchPath } from 'react-router-dom';
-import { tools } from '../data/tools';
-import { breadcrumbSchema, collectionSchema, webApplicationSchema } from './schema';
+import { latestRulesReview, tools } from '../data/tools';
+import {
+  breadcrumbSchema,
+  collectionSchema,
+  faqSchema,
+  organizationSchema,
+  webApplicationSchema,
+  webSiteSchema,
+} from './schema';
 import { DEFAULT_SOCIAL_IMAGE, SITE_URL } from './site';
 import type { Crumb, JsonLd, Page, PageLoader } from './types';
 
@@ -17,12 +24,14 @@ interface PageDefinition {
   name: string;
   title: string;
   description: string;
+  lastModified: string;
   load: PageLoader;
   schema?: JsonLd[];
 }
 
-function definePage({ path, name, title, description, load, schema = [] }: PageDefinition): Page {
+function definePage({ path, name, title, description, lastModified, load, schema = [] }: PageDefinition): Page {
   const trail = path === '/' ? [] : [HOME_CRUMB, { name, path }];
+  const site = [organizationSchema(), webSiteSchema()];
   return {
     path,
     name,
@@ -31,21 +40,23 @@ function definePage({ path, name, title, description, load, schema = [] }: PageD
     canonical: SITE_URL + path,
     trail,
     image: DEFAULT_SOCIAL_IMAGE,
-    jsonLd: trail.length > 0 ? [...schema, breadcrumbSchema(trail)] : schema,
+    jsonLd: [...schema, ...site, ...(trail.length > 0 ? [breadcrumbSchema(trail)] : [])],
     sitemap: true,
     noindex: false,
+    lastModified,
     load,
   };
 }
 
 const HOME_DESCRIPTION =
-  'Free GST, income tax and loan calculators with calculation breakdowns. All calculations run in your browser; no account required.';
+  'Free GST, income tax and loan calculators for India, with the workings shown. Every calculation runs in your browser, with no account and no tracking.';
 
 const home = definePage({
   path: '/',
   name: HOME_CRUMB.name,
   title: 'Khatakit - Free Accounting & Financial Tools for India',
   description: HOME_DESCRIPTION,
+  lastModified: latestRulesReview,
   load: () => import('../pages/Home').then((module) => ({ Component: module.default })),
   schema: [
     collectionSchema({
@@ -63,13 +74,16 @@ const calculators = tools.map((tool) =>
     name: tool.name,
     title: tool.seoTitle,
     description: tool.seoDescription,
+    lastModified: tool.rulesReviewed,
     load: tool.load,
     schema: [
       webApplicationSchema({
         name: tool.name,
         description: tool.seoDescription,
         url: SITE_URL + tool.path,
+        dateModified: tool.rulesReviewed,
       }),
+      faqSchema(tool.faq),
     ],
   })
 );
@@ -77,9 +91,10 @@ const calculators = tools.map((tool) =>
 const about = definePage({
   path: '/about',
   name: 'About Khatakit',
-  title: 'About Khatakit - Free Accounting Tools',
+  title: 'About Khatakit - Who Builds It and How Rules Are Checked',
   description:
-    'About Khatakit, a collection of free accounting and tax calculators. Project information, privacy and contributions.',
+    'Who builds Khatakit, how its tax rules are checked against primary sources, how to report an error, and how your inputs stay in your browser.',
+  lastModified: latestRulesReview,
   load: () => import('../pages/About').then((module) => ({ Component: module.default })),
 });
 
@@ -97,6 +112,7 @@ export const notFoundPage: Page = {
   jsonLd: [],
   sitemap: false,
   noindex: true,
+  lastModified: null,
   load: () => import('../pages/NotFound').then((module) => ({ Component: module.default })),
 };
 

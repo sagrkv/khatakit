@@ -23,6 +23,7 @@ khatakit/
 ├── public/
 │   ├── favicon.svg
 │   ├── logo-mark.svg
+│   ├── logo.png                # Square logo for structured data, from npm run og-image
 │   ├── icons/LUCIDE-LICENSE.txt
 │   └── og-image.png            # Social image, from npm run og-image
 ├── scripts/

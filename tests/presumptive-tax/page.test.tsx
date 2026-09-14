@@ -30,7 +30,7 @@ const results = () => page.node.querySelector('[aria-label="Calculation results"
 describe('presumptive page before any input', () => {
   it('shows section 58 naming, the worked examples, limits and references', () => {
     expect(textOf(page.node.querySelector('h1 + .page-description'))).toContain(
-      'section 58 (old 44ADA and 44AD)'
+      'section 58 of the Income-tax Act, 2025 (old 44AD and 44ADA)'
     );
     expect(textOf(page.node.querySelector('.period-badge'))).toBe('Tax year 2026-27');
     const guide = textOf(page.node.querySelector('.calculator-guide'));
