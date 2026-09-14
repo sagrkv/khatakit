@@ -1,0 +1,266 @@
+/* Field validation, calculator guides, related links and the repayment chart. */
+.field-error {
+  margin-top: var(--space-2);
+  color: var(--warning-ink);
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.6;
+}
+.control[aria-invalid='true'] {
+  border-color: var(--warning-ink);
+  background: var(--warning);
+}
+.control[aria-invalid='true']:focus {
+  border-color: var(--warning-ink);
+}
+
+.validation-list {
+  display: grid;
+  gap: var(--space-1);
+  padding-left: var(--space-5);
+  list-style: disc;
+}
+.guide-prose .guide-references {
+  padding-left: 0;
+  list-style: none;
+  gap: var(--space-3);
+}
+.guide-references li {
+  display: grid;
+  gap: 2px;
+}
+.guide-references span:not([aria-hidden]) {
+  font-size: 0.75rem;
+  line-height: 1.6;
+  color: var(--muted);
+}
+.guide-prose a {
+  overflow-wrap: anywhere;
+}
+
+.result-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.calculator-guide {
+  margin-top: var(--space-10);
+  padding-top: var(--space-8);
+  border-top: 1px solid var(--border);
+}
+.guide-title {
+  color: var(--ink);
+  font-size: clamp(1.25rem, 2.2vw, 1.5rem);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  margin-bottom: var(--space-6);
+}
+.guide-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-6);
+  align-items: start;
+}
+.guide-section {
+  min-width: 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-panel);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-panel);
+}
+.guide-section-wide {
+  grid-column: 1 / -1;
+}
+.guide-prose {
+  font-size: 0.875rem;
+  line-height: 1.75;
+}
+.guide-prose > * + * {
+  margin-top: var(--space-4);
+}
+.guide-prose ul,
+.guide-prose ol {
+  display: grid;
+  gap: var(--space-2);
+  padding-left: var(--space-5);
+}
+.guide-prose ul {
+  list-style: disc;
+}
+.guide-prose ol {
+  list-style: decimal;
+}
+.guide-prose li::marker {
+  color: var(--muted);
+}
+.guide-prose .breakdown-scroll {
+  font-size: 0.8125rem;
+}
+.guide-formula {
+  background: var(--blue-soft);
+  border: 1px solid var(--blue-border);
+  border-radius: var(--radius-control);
+  padding: var(--space-4);
+}
+.guide-formula-expression {
+  font-family: var(--font-numeric);
+  font-size: 0.875rem;
+  line-height: 1.7;
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
+.guide-formula-key {
+  margin-top: var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--blue-border);
+  font-size: 0.75rem;
+  line-height: 1.7;
+  color: var(--text);
+}
+.guide-figure {
+  font-family: var(--font-numeric);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.related-tools {
+  display: grid;
+  gap: var(--space-2);
+  list-style: none;
+  padding: 0;
+}
+.guide-prose .related-tools {
+  padding-left: 0;
+  list-style: none;
+}
+.related-tools a {
+  display: flex;
+  align-items: start;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-control);
+  color: var(--text);
+  text-decoration: none;
+  transition: background var(--motion-fast);
+}
+.related-tools a:hover {
+  background: var(--action-tint);
+}
+.related-tools a:focus-visible {
+  outline: 3px solid var(--action);
+  outline-offset: 2px;
+}
+.related-tools svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  margin-top: 3px;
+  color: var(--action);
+}
+.related-tools strong {
+  display: block;
+  color: var(--action);
+  font-size: 0.875rem;
+}
+.related-tools small {
+  display: block;
+  font-size: 0.75rem;
+  line-height: 1.6;
+}
+
+.year-chart {
+  margin: 0;
+}
+.year-chart-readout {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-4);
+  min-height: 2.75rem;
+  font-size: 0.75rem;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+.year-chart-readout strong {
+  color: var(--ink);
+}
+.year-chart-key {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.year-chart-plot {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 168px;
+  padding-top: var(--space-2);
+  border-bottom: 1px solid var(--border);
+}
+.year-chart-column {
+  flex: 1 1 0;
+  min-width: 0;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  cursor: default;
+}
+.year-chart-stack {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 2px;
+  width: 100%;
+  max-width: 24px;
+}
+.year-chart-stack > span {
+  display: block;
+  min-height: 0;
+}
+.year-chart-stack > span:last-child {
+  border-radius: 4px 4px 0 0;
+}
+.year-chart-principal {
+  background: var(--chart-principal);
+}
+.year-chart-interest {
+  background: var(--chart-interest);
+}
+.year-chart-column:hover .year-chart-stack,
+.year-chart-column[data-active='true'] .year-chart-stack {
+  opacity: 1;
+}
+.year-chart-plot:hover .year-chart-column:not(:hover) .year-chart-stack {
+  opacity: 0.55;
+}
+.year-chart-axis {
+  display: flex;
+  justify-content: space-between;
+  margin-top: var(--space-2);
+  font-size: 0.6875rem;
+  color: var(--muted);
+}
+.year-chart figcaption {
+  margin-top: var(--space-3);
+  font-size: 0.75rem;
+  line-height: 1.7;
+  color: var(--text);
+}
+
+@media (max-width: 900px) {
+  .guide-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (max-width: 760px) {
+  .guide-section {
+    padding: var(--space-5);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .related-tools a {
+    transition: none;
+  }
+}

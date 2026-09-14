@@ -1,0 +1,7 @@
+@import 'tailwindcss';
+@import './styles/tokens.css';
+@import './styles/catalogue.css';
+@import './styles/components.css';
+@import './styles/interactions.css';
+@import './styles/guide.css';
+@import './styles/worksheet.css';
