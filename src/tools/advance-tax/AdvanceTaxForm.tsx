@@ -14,19 +14,19 @@ export default function AdvanceTaxForm({ form, errors, onChange }: AdvanceTaxFor
   return (
     <div className="form-stack">
       <RadioGroup
-        label="Tax Regime"
+        label="Tax regime"
         value={form.regime}
         onChange={(v) => onChange({ ...form, regime: v as TaxRegime })}
         options={[
-          { label: 'New Regime', value: 'new' },
-          { label: 'Old Regime', value: 'old' },
+          { label: 'New regime', value: 'new' },
+          { label: 'Old regime', value: 'old' },
         ]}
         helpText="Both regimes are worked out. The schedule follows the one you pick."
       />
 
       <NumberInput
         id="gross-income"
-        label="Gross Total Income"
+        label="Gross total income"
         value={form.grossIncome}
         onChange={(v) => onChange({ ...form, grossIncome: v })}
         prefix="₹"
@@ -37,7 +37,7 @@ export default function AdvanceTaxForm({ form, errors, onChange }: AdvanceTaxFor
 
       <NumberInput
         id="salary-income"
-        label="Salary or Pension Included"
+        label="Salary or pension included"
         value={form.salaryIncome}
         onChange={(v) => onChange({ ...form, salaryIncome: v })}
         prefix="₹"
@@ -49,7 +49,7 @@ export default function AdvanceTaxForm({ form, errors, onChange }: AdvanceTaxFor
       {form.regime === 'old' && (
         <NumberInput
           id="deductions"
-          label="Total Deductions (80C, 80D, etc.)"
+          label="Total deductions (80C, 80D, etc.)"
           value={form.deductions}
           onChange={(v) => onChange({ ...form, deductions: v })}
           prefix="₹"
@@ -61,7 +61,7 @@ export default function AdvanceTaxForm({ form, errors, onChange }: AdvanceTaxFor
 
       <NumberInput
         id="tds-deducted"
-        label="TDS Already Deducted"
+        label="TDS already deducted"
         value={form.tdsDeducted}
         onChange={(v) => onChange({ ...form, tdsDeducted: v })}
         prefix="₹"
@@ -72,7 +72,7 @@ export default function AdvanceTaxForm({ form, errors, onChange }: AdvanceTaxFor
 
       <Select
         id="age-category"
-        label="Age Category"
+        label="Age category"
         value={form.ageCategory}
         onChange={(v) => onChange({ ...form, ageCategory: v as AgeCategory })}
         options={[
@@ -85,7 +85,7 @@ export default function AdvanceTaxForm({ form, errors, onChange }: AdvanceTaxFor
 
       {form.ageCategory !== 'below60' && (
         <RadioGroup
-          label="Business or Professional Income"
+          label="Business or professional income"
           value={form.hasBusinessIncome ? 'yes' : 'no'}
           onChange={(v) => onChange({ ...form, hasBusinessIncome: v === 'yes' })}
           options={[

@@ -27,7 +27,7 @@ export default function TdsForm(props: Props) {
   const { mode, single, onSingleChange, today } = props;
   const max = today || undefined;
   return (
-    <div className="form-stack">
+    <div className={mode === 'bulk' ? 'form-stack form-columns' : 'form-stack'}>
       <RadioGroup
         label="Calculate for"
         value={mode}

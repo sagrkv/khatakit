@@ -1,4 +1,4 @@
-import { EmptyState, Panel } from '../../components/ui/Surface';
+import { EmptyState } from '../../components/ui/Surface';
 import LoanBreakdown from '../../components/calculator/LoanBreakdown';
 import ResultCard from '../../components/calculator/ResultCard';
 import BreakdownTable from '../../components/calculator/BreakdownTable';
@@ -28,29 +28,35 @@ export default function EmiResults({ input, result, errors }: EmiResultsProps) {
       <div className="result-grid result-grid-three">
         <ResultCard label="Monthly EMI" value={formatCurrency(result.emi)} variant="primary" />
         <ResultCard
-          label="Total Interest"
+          label="Total interest"
           value={formatCurrency(result.totalInterest)}
           variant="neutral"
         />
         <ResultCard
-          label="Total Payable"
+          label="Total payable"
           value={formatCurrency(result.totalPayable)}
           variant="neutral"
           subtext={`Over ${input.tenureMonths} ${input.tenureMonths === 1 ? 'month' : 'months'}`}
         />
       </div>
 
-      <Panel title="Principal and interest breakdown">
-        <LoanBreakdown principal={input.principal} interest={result.totalInterest} />
-      </Panel>
+      <div>
+        <h3 className="section-title">Principal and interest</h3>
+        <div className="result-figure">
+          <LoanBreakdown principal={input.principal} interest={result.totalInterest} />
+        </div>
+      </div>
 
-      <Panel title="Principal and interest by loan year">
-        <EmiYearChart schedule={result.schedule} />
-      </Panel>
+      <div>
+        <h3 className="section-title">Principal and interest by loan year</h3>
+        <div className="result-figure">
+          <EmiYearChart schedule={result.schedule} />
+        </div>
+      </div>
 
       <div>
         <div className="section-heading">
-          <h3 className="section-title">Year-wise Amortisation</h3>
+          <h3 className="section-title">Year-wise amortisation</h3>
           <div className="result-actions">
             <CopyButton text={emiSummaryText(input, result)} label="Copy" />
             <DownloadButton
@@ -62,7 +68,7 @@ export default function EmiResults({ input, result, errors }: EmiResultsProps) {
         </div>
         <BreakdownTable
           columns={[
-            { key: 'year', label: 'Loan Year', align: 'left' },
+            { key: 'year', label: 'Loan year', align: 'left' },
             { key: 'principal', label: 'Principal', align: 'right', mono: true },
             { key: 'interest', label: 'Interest', align: 'right', mono: true },
             { key: 'balance', label: 'Balance', align: 'right', mono: true },

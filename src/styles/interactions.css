@@ -4,7 +4,6 @@
 }
 .action-button,
 .copy-button,
-.hero-action,
 .category-nav button {
   transition:
     background-color var(--motion-fast) ease,
@@ -13,8 +12,7 @@
     transform var(--motion-press) ease;
 }
 .action-button:active:not(:disabled),
-.copy-button:active:not(:disabled),
-.hero-action:active {
+.copy-button:active:not(:disabled) {
   transform: translateY(1px);
   box-shadow: none;
 }
@@ -37,15 +35,10 @@
 .category-nav button:active {
   transform: translateY(1px);
 }
-.tool-tile:focus-visible {
-  box-shadow: 0 0 0 5px var(--focus-halo);
-}
-.tile-open svg,
-.hero-action svg {
+.tile-open svg {
   transition: transform var(--motion-fast) ease;
 }
-.tool-tile:is(:hover, :focus-visible) .tile-open svg,
-.hero-action:is(:hover, :focus-visible) svg {
+.tool-tile:is(:hover, :focus-visible) .tile-open svg {
   transform: translateX(3px);
 }
 .directory-toolbar > button {
@@ -99,7 +92,7 @@
   color: var(--warning-ink);
 }
 .copy-error {
-  font-size: 11px;
+  font-size: var(--type-small);
   line-height: 1.5;
   color: var(--warning-ink);
   text-align: right;
@@ -107,12 +100,6 @@
 .copy-button:disabled {
   cursor: wait;
   opacity: 0.7;
-}
-.result-value {
-  overflow-wrap: anywhere;
-}
-.breakdown-scroll {
-  max-width: 100%;
 }
 .breakdown-scroll tbody tr:hover {
   background: var(--action-tint);
@@ -152,7 +139,7 @@
   font-variant-numeric: tabular-nums;
 }
 .loan-ring-centre > span {
-  font-size: 10px;
+  font-size: var(--type-small);
   line-height: 1.5;
   text-align: center;
   color: var(--muted);
@@ -166,11 +153,11 @@
   gap: 7px;
   flex-wrap: wrap;
   color: var(--text);
-  font-size: 11px;
+  font-size: var(--type-small);
 }
 .loan-legend small {
   margin-left: auto;
-  font-size: 10px;
+  font-size: var(--type-small);
   font-variant-numeric: tabular-nums;
 }
 .legend-dot {
@@ -197,7 +184,7 @@
   border-top: 1px solid var(--border);
   padding-top: 12px;
   margin-top: 17px;
-  font-size: 11px;
+  font-size: var(--type-small);
   color: var(--text);
   display: flex;
   flex-wrap: wrap;
@@ -217,18 +204,19 @@
     width: 165px;
     margin: auto;
   }
+}
+/* Full 44px targets wherever the page is used by touch or laid out for small screens. */
+@media (max-width: 900px), (pointer: coarse) {
   .copy-button {
-    min-height: 42px;
+    min-height: 44px;
   }
 }
 @media (prefers-reduced-motion: reduce) {
   .action-button,
   .copy-button,
-  .hero-action,
   .category-nav button,
   .tool-search,
   .tile-open svg,
-  .hero-action svg,
   .loan-ring-segment {
     transition: none;
   }
@@ -236,10 +224,8 @@
     animation: none;
   }
   .tool-tile:is(:hover, :focus-visible) .tile-open svg,
-  .hero-action:is(:hover, :focus-visible) svg,
   .action-button:active:not(:disabled),
   .copy-button:active:not(:disabled),
-  .hero-action:active,
   .category-nav button:active {
     transform: none;
   }
@@ -247,11 +233,4 @@
 /* Grid items must shrink before wide schedules scroll inside their own region. */
 main .grid > * {
   min-width: 0;
-}
-.result-card {
-  container-type: inline-size;
-}
-.result-value {
-  font-size: clamp(16px, 10cqi, 28px);
-  line-height: 1.35;
 }

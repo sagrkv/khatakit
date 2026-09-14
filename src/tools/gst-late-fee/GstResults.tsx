@@ -39,13 +39,13 @@ export default function GstResults({ input, result }: GstResultsProps) {
 
       <div className="result-grid result-grid-three">
         <ResultCard
-          label="Late Fee and Interest"
+          label="Late fee and interest"
           value={formatCurrency(result.totalPenalty)}
           variant="error"
           subtext={`${result.daysLate} days late`}
         />
         <ResultCard
-          label="Late Fee"
+          label="Late fee"
           value={formatCurrency(result.cappedLateFee)}
           variant="neutral"
           subtext={`CGST ${formatCurrency(result.cgstLateFee)} + SGST/UTGST ${formatCurrency(result.sgstLateFee)}`}

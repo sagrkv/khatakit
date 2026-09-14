@@ -1,7 +1,7 @@
 import BreakdownTable from '../../components/calculator/BreakdownTable';
 import CopyButton from '../../components/calculator/CopyButton';
+import DownloadButton from '../../components/calculator/DownloadButton';
 import ResultCard from '../../components/calculator/ResultCard';
-import ToolIcon from '../../components/ui/ToolIcon';
 import { billToCsv, billToText } from './csv';
 import { formatPaise, formatRate, formatRupees, formatSignedPaise } from './format';
 import GstWorkings from './GstWorkings';
@@ -10,19 +10,6 @@ import type { BillResult, TaxHeads } from './types';
 interface Props {
   result: BillResult;
   roundToRupee: boolean;
-}
-
-function downloadCsv(result: BillResult) {
-  // The byte order mark lets spreadsheet apps read the file as UTF-8.
-  const blob = new Blob(['\uFEFF', billToCsv(result)], { type: 'text/csv;charset=utf-8' });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement('a');
-  link.href = url;
-  link.download = 'gst-bill.csv';
-  document.body.appendChild(link);
-  link.click();
-  link.remove();
-  setTimeout(() => URL.revokeObjectURL(url), 0);
 }
 
 const money = (key: string, label: string) => ({ key, label, align: 'right' as const, mono: true });
@@ -35,24 +22,7 @@ export default function GstResults({ result, roundToRupee }: Props) {
       ? { cgst: formatPaise(heads.cgstPaise), sgst: formatPaise(heads.sgstPaise) }
       : { igst: formatPaise(heads.igstPaise) };
   const hasLineRoundOff = result.lines.some((line) => line.roundOffPaise !== 0);
-  const roundOffColumn = hasLineRoundOff ? [money('roundOff', 'Round-off')] : [];
-
-  const lineRows = result.lines.map((line, index) => ({
-    line: line.description ? `${index + 1}. ${line.description}` : `Line ${index + 1}`,
-    rate: formatRate(line.rateMilli),
-    taxable: formatPaise(line.taxablePaise),
-    ...headCells(line),
-    roundOff: formatSignedPaise(line.roundOffPaise),
-    total: formatPaise(line.totalPaise),
-  }));
-
-  const rateRows = result.byRate.map((rate) => ({
-    rate: formatRate(rate.rateMilli),
-    taxable: formatPaise(rate.taxablePaise),
-    ...headCells(rate),
-    roundOff: formatSignedPaise(rate.roundOffPaise),
-    total: formatPaise(rate.totalPaise),
-  }));
+  const roundOff = result.roundOffPaise;
 
   const billRows = [
     { item: 'Taxable value', amount: formatPaise(result.taxablePaise) },
@@ -70,7 +40,6 @@ export default function GstResults({ result, roundToRupee }: Props) {
       : []),
   ];
 
-  const roundOff = result.roundOffPaise;
   const check = [
     `${formatPaise(result.taxablePaise)} taxable`,
     `+ ${formatPaise(result.taxPaise)} GST`,
@@ -81,6 +50,11 @@ export default function GstResults({ result, roundToRupee }: Props) {
   return (
     <div className="result-stack">
       <div className="result-grid result-grid-three">
+        <ResultCard
+          label="Bill total"
+          value={formatRupees(result.totalPaise)}
+          subtext={roundOff === 0 ? undefined : `Includes round-off of ${formatSignedPaise(roundOff)}`}
+        />
         <ResultCard label="Taxable value" value={formatRupees(result.taxablePaise)} variant="neutral" />
         <ResultCard
           label="Total GST"
@@ -92,11 +66,6 @@ export default function GstResults({ result, roundToRupee }: Props) {
               : `${result.effectiveRatePercent.toFixed(2)}% of the taxable value`
           }
         />
-        <ResultCard
-          label="Bill total"
-          value={formatRupees(result.totalPaise)}
-          subtext={roundOff === 0 ? undefined : `Includes round-off of ${formatSignedPaise(roundOff)}`}
-        />
       </div>
 
       <div>
@@ -104,62 +73,75 @@ export default function GstResults({ result, roundToRupee }: Props) {
           <h3 className="section-title">Bill totals</h3>
           <div className="result-actions">
             <CopyButton text={billToText(result)} label="Copy" />
-            <button type="button" className="copy-button" onClick={() => downloadCsv(result)}>
-              <ToolIcon name="download" />
-              <span>Download CSV</span>
-            </button>
+            <DownloadButton
+              label="Download CSV"
+              filename="gst-bill.csv"
+              getContent={() => billToCsv(result)}
+            />
           </div>
         </div>
         <BreakdownTable
           caption="Bill totals"
-          columns={[
-            { key: 'item', label: 'Component', align: 'left' },
-            money('amount', 'Amount (₹)'),
-          ]}
+          columns={[{ key: 'item', label: 'Component', align: 'left' }, money('amount', 'Amount (₹)')]}
           rows={billRows}
           footer={{ item: 'Bill total', amount: formatPaise(result.totalPaise) }}
         />
         <p className="bill-check">{check}</p>
       </div>
 
-      <div>
-        <h3 className="section-title">Lines</h3>
-        <BreakdownTable
-          caption="Tax on each line, in rupees"
-          columns={[
-            { key: 'line', label: 'Line', align: 'left' },
-            { key: 'rate', label: 'Rate', align: 'right', mono: true },
-            money('taxable', 'Taxable value'),
-            ...headColumns,
-            ...roundOffColumn,
-            money('total', 'Line total'),
-          ]}
-          rows={lineRows}
-          footer={{
-            line: 'Total',
-            rate: '',
-            taxable: formatPaise(result.taxablePaise),
-            ...headCells(result),
-            roundOff: formatSignedPaise(result.lineRoundOffPaise),
-            total: formatPaise(result.subtotalPaise),
-          }}
-        />
-      </div>
+      {result.lines.length > 1 && (
+        <div className="table-nowrap-head">
+          <h3 className="section-title">Lines</h3>
+          <BreakdownTable
+            caption="Tax on each line, in rupees"
+            columns={[
+              { key: 'line', label: 'Line', align: 'left' },
+              money('taxable', 'Taxable value'),
+              ...headColumns,
+              money('total', 'Line total'),
+            ]}
+            rows={result.lines.map((line, index) => ({
+              line: `${line.description || `Line ${index + 1}`}, ${formatRate(line.rateMilli)}`,
+              taxable: formatPaise(line.taxablePaise),
+              ...headCells(line),
+              total: formatPaise(line.totalPaise),
+            }))}
+            footer={{
+              line: 'Total',
+              taxable: formatPaise(result.taxablePaise),
+              ...headCells(result),
+              total: formatPaise(result.subtotalPaise),
+            }}
+          />
+          {hasLineRoundOff && (
+            <p className="field-help">
+              Line totals include the round-off on lines including GST. The workings show it for
+              each line.
+            </p>
+          )}
+        </div>
+      )}
 
-      <div>
-        <h3 className="section-title">By rate</h3>
-        <BreakdownTable
-          caption="Tax by rate, in rupees"
-          columns={[
-            { key: 'rate', label: 'Rate', align: 'left' },
-            money('taxable', 'Taxable value'),
-            ...headColumns,
-            ...roundOffColumn,
-            money('total', 'Total'),
-          ]}
-          rows={rateRows}
-        />
-      </div>
+      {result.byRate.length > 1 && (
+        <div className="table-nowrap-head">
+          <h3 className="section-title">By rate</h3>
+          <BreakdownTable
+            caption="Tax by rate, in rupees"
+            columns={[
+              { key: 'rate', label: 'Rate', align: 'left' },
+              money('taxable', 'Taxable value'),
+              ...headColumns,
+              money('total', 'Total'),
+            ]}
+            rows={result.byRate.map((rate) => ({
+              rate: formatRate(rate.rateMilli),
+              taxable: formatPaise(rate.taxablePaise),
+              ...headCells(rate),
+              total: formatPaise(rate.totalPaise),
+            }))}
+          />
+        </div>
+      )}
 
       <GstWorkings result={result} roundToRupee={roundToRupee} />
     </div>

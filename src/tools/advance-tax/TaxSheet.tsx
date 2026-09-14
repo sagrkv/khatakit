@@ -11,20 +11,20 @@ interface TaxSheetProps {
 }
 
 export default function TaxSheet({ regime, age, comp, selected }: TaxSheetProps) {
-  const label = regime === 'new' ? 'New Regime' : 'Old Regime';
+  const label = regime === 'new' ? 'New regime' : 'Old regime';
   const rows = [
-    { item: 'Gross Total Income', amount: formatCurrency(comp.grossIncome) },
+    { item: 'Gross total income', amount: formatCurrency(comp.grossIncome) },
     {
-      item: 'Less: Standard Deduction (salary or pension)',
+      item: 'Less: standard deduction (salary or pension)',
       amount: formatCurrency(-comp.standardDeduction),
     },
     ...(comp.otherDeductions > 0
-      ? [{ item: 'Less: Deductions (Ch. VI-A)', amount: formatCurrency(-comp.otherDeductions) }]
+      ? [{ item: 'Less: deductions (Chapter VI-A)', amount: formatCurrency(-comp.otherDeductions) }]
       : []),
-    { item: 'Taxable Income', amount: formatCurrency(comp.taxableIncome) },
+    { item: 'Taxable income', amount: formatCurrency(comp.taxableIncome) },
     ...incomeTaxRows(comp.taxableIncome, regime, age, comp),
-    { item: 'Total Tax', amount: formatCurrency(comp.totalTax) },
-    { item: 'Less: TDS Deducted', amount: formatCurrency(-comp.tdsDeducted) },
+    { item: 'Total tax', amount: formatCurrency(comp.totalTax) },
+    { item: 'Less: TDS deducted', amount: formatCurrency(-comp.tdsDeducted) },
   ];
 
   return (
@@ -39,7 +39,7 @@ export default function TaxSheet({ regime, age, comp, selected }: TaxSheetProps)
           { key: 'amount', label: 'Amount', align: 'right', mono: true },
         ]}
         rows={rows}
-        footer={{ item: 'Net Tax Payable', amount: formatCurrency(comp.netTaxPayable) }}
+        footer={{ item: 'Net tax payable', amount: formatCurrency(comp.netTaxPayable) }}
         caption={`Tax computation - ${label}`}
       />
     </div>

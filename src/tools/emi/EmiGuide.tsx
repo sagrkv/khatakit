@@ -63,7 +63,7 @@ export default function EmiGuide() {
         </ul>
       </GuideSection>
 
-      <GuideSection title="Worked example from RBI" wide>
+      <GuideSection title="Worked example from RBI">
         <p>
           RBI&apos;s Key Facts Statement example is a loan of {rupees(rbi.input.principal)} at{' '}
           {rbi.input.annualRate}% a year for {rbi.input.tenureMonths} months. The monthly rate is{' '}

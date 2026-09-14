@@ -30,6 +30,9 @@ afterEach(() => {
 
 const $ = <T extends Element>(selector: string) => node.querySelector<T>(selector);
 const output = () => $('.calculator-output')!.textContent ?? '';
+const results = () => $('[aria-label="Calculation results"]')!;
+const sectionTitles = () =>
+  Array.from(results().querySelectorAll('h3.section-title'), (heading) => heading.textContent);
 
 function type(selector: string, value: string) {
   const input = $<HTMLInputElement>(selector)!;
@@ -59,14 +62,31 @@ describe('GST calculator page', () => {
   it('shows the method, examples and links before anything is entered', () => {
     expect($('h1')!.textContent).toBe('GST Calculator');
     expect($('.empty-state')).not.toBeNull();
-    const text = node.textContent ?? '';
+    const guide = $('.calculator-guide')!;
+    expect(guide.querySelector('h2')!.textContent).toBe('How GST is worked out');
+    expect(Array.from(guide.querySelectorAll('h3'), (heading) => heading.textContent)).toEqual([
+      'Formula',
+      'Rounding method',
+      'Worked example',
+      'Edge cases',
+      'Assumptions',
+      'Supported period',
+      'References',
+      'Related calculators',
+    ]);
+    const text = guide.textContent ?? '';
     expect(text).toContain('Taxable value ≈ amount ÷ (1 + rate)');
-    expect(text).toContain('Worked example');
     expect(text).toContain('5,547.56');
-    expect(text).toContain('Rounding method');
     expect(text).toContain('Section 170');
-    expect(text).toContain('Rates and supported period');
-    expect($('a[href="/gst-late-fee-interest-calculator"]')).not.toBeNull();
+    expect(text).toContain('1 February 2026');
+    expect(guide.querySelectorAll('.guide-references a')).toHaveLength(4);
+    for (const href of [
+      '/gst-late-fee-interest-calculator',
+      '/tds-interest-calculator',
+      '/advance-tax-calculator',
+    ]) {
+      expect(guide.querySelector(`.related-tools a[href="${href}"]`)).not.toBeNull();
+    }
   });
 
   it('calculates a line as soon as an amount is entered and switches supply type', () => {
@@ -78,6 +98,30 @@ describe('GST calculator page', () => {
     click($('input[type=radio][value="inter"]'));
     expect(output()).toContain('IGST = 12,345.67 × 18% = 2,222.2206, rounded to 2,222.22.');
     expect(output()).not.toContain('CGST');
+  });
+
+  it('shows the lines and rate tables only when they add something', () => {
+    type('#gst-line-1-amount', '1000');
+    expect(sectionTitles()).toEqual(['Bill totals', 'Workings']);
+    expect(results().querySelectorAll('details')).toHaveLength(0);
+
+    click(button('Add line'));
+    type('#gst-line-2-amount', '500');
+    expect(sectionTitles()).toEqual(['Bill totals', 'Lines', 'Workings']);
+    expect(
+      Array.from(
+        results().querySelectorAll('[aria-label="Tax on each line, in rupees"] th'),
+        (heading) => heading.textContent
+      )
+    ).toEqual(['Line', 'Taxable value', 'CGST', 'SGST', 'Line total']);
+    expect(results().querySelectorAll('details.workings-details')).toHaveLength(2);
+
+    choose('#gst-line-2-rate', '5');
+    expect(sectionTitles()).toEqual(['Bill totals', 'Lines', 'By rate', 'Workings']);
+    expect(output()).toContain('Line 2, 5%');
+
+    click(button('Remove line 2'));
+    expect(sectionTitles()).toEqual(['Bill totals', 'Workings']);
   });
 
   it('adds and removes lines, moving focus and announcing the change', () => {
@@ -177,6 +221,7 @@ describe('GST calculator page', () => {
       reader.readAsText(blob!);
     });
     expect(csv).toContain('Bill total,100.10');
+    expect(output()).toContain('gst-bill.csv downloaded.');
 
     expect(fetchSpy).not.toHaveBeenCalled();
     expect(xhrOpen).not.toHaveBeenCalled();

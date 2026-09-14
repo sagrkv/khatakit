@@ -27,6 +27,42 @@ export function slabBreakdown(income: number, regime: TaxRegime, age: AgeCategor
   return rows;
 }
 
+export interface TaxLine {
+  item: string;
+  /** Rupees; deductions are negative. */
+  amount: number;
+}
+
+/** Workings from taxable income to cess, with amounts as numbers for export. */
+export function incomeTaxLines(
+  taxableIncome: number,
+  regime: TaxRegime,
+  age: AgeCategory,
+  tax: IncomeTaxBreakdown
+): TaxLine[] {
+  const slabs = slabBreakdown(taxableIncome, regime, age).map((row) => ({
+    item: `${row.rate === 0 ? 'Nil' : `${row.rate}%`} on ${formatCurrency(row.from)} to ${formatCurrency(row.to)}`,
+    amount: row.tax,
+  }));
+  const marginalRelief = regime === 'new' && taxableIncome > REBATE.new.incomeLimit;
+  return [
+    ...slabs,
+    { item: 'Tax on income', amount: tax.taxOnIncome },
+    ...(tax.rebate > 0
+      ? [
+          {
+            item: marginalRelief
+              ? 'Less: marginal relief (section 156(2)(b))'
+              : 'Less: rebate (section 156)',
+            amount: -tax.rebate,
+          },
+        ]
+      : []),
+    ...(tax.surcharge > 0 ? [{ item: 'Surcharge', amount: tax.surcharge }] : []),
+    { item: 'Health & Education Cess (4%)', amount: tax.cess },
+  ];
+}
+
 export type WorkingRow = Record<'item' | 'amount', string>;
 
 /** Visible workings from taxable income to cess, for a breakdown table. */
@@ -36,25 +72,8 @@ export function incomeTaxRows(
   age: AgeCategory,
   tax: IncomeTaxBreakdown
 ): WorkingRow[] {
-  const slabs = slabBreakdown(taxableIncome, regime, age).map((row) => ({
-    item: `${row.rate === 0 ? 'Nil' : `${row.rate}%`} on ${formatCurrency(row.from)} to ${formatCurrency(row.to)}`,
-    amount: formatCurrency(row.tax),
+  return incomeTaxLines(taxableIncome, regime, age, tax).map((line) => ({
+    item: line.item,
+    amount: formatCurrency(line.amount),
   }));
-  const marginalRelief = regime === 'new' && taxableIncome > REBATE.new.incomeLimit;
-  return [
-    ...slabs,
-    { item: 'Tax on Income', amount: formatCurrency(tax.taxOnIncome) },
-    ...(tax.rebate > 0
-      ? [
-          {
-            item: marginalRelief
-              ? 'Less: Marginal Relief (section 156(2)(b))'
-              : 'Less: Rebate (section 156)',
-            amount: formatCurrency(-tax.rebate),
-          },
-        ]
-      : []),
-    ...(tax.surcharge > 0 ? [{ item: 'Surcharge', amount: formatCurrency(tax.surcharge) }] : []),
-    { item: 'Health & Education Cess (4%)', amount: formatCurrency(tax.cess) },
-  ];
 }

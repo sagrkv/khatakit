@@ -19,25 +19,25 @@ export default function PresumptiveForm({ input, errors, onChange }: Presumptive
         value={input.scheme}
         onChange={(v) => onChange({ ...input, scheme: v as PresumptiveScheme })}
         options={[
-          { label: '44ADA (Professional)', value: '44ADA' },
-          { label: '44AD (Business)', value: '44AD' },
+          { label: '44ADA (profession)', value: '44ADA' },
+          { label: '44AD (business)', value: '44AD' },
         ]}
         helpText="Old section names. Both are now section 58(2) of the Income-tax Act, 2025."
       />
 
       <RadioGroup
-        label="Tax Regime"
+        label="Tax regime"
         value={input.regime}
         onChange={(v) => onChange({ ...input, regime: v as TaxRegime })}
         options={[
-          { label: 'New Regime', value: 'new' },
-          { label: 'Old Regime', value: 'old' },
+          { label: 'New regime', value: 'new' },
+          { label: 'Old regime', value: 'old' },
         ]}
       />
 
       <NumberInput
         id="gross-receipts"
-        label={business ? 'Gross Turnover' : 'Gross Receipts'}
+        label={business ? 'Gross turnover' : 'Gross receipts'}
         value={input.grossReceipts}
         onChange={(v) => onChange({ ...input, grossReceipts: v })}
         prefix="₹"
@@ -52,7 +52,7 @@ export default function PresumptiveForm({ input, errors, onChange }: Presumptive
 
       <NumberInput
         id="cash-receipts"
-        label="Cash Receipts"
+        label="Cash receipts"
         value={input.cashReceipts}
         onChange={(v) => onChange({ ...input, cashReceipts: v })}
         prefix="₹"

@@ -35,24 +35,11 @@ export default function Home() {
                 <br />
                 Calculations run in your browser.
               </p>
-              <a
-                className="hero-action"
-                href="#tools"
-                onClick={() => searchRef.current?.focus({ preventScroll: true })}
-              >
-                Browse tools <ToolIcon name="arrow" />
-              </a>
-              <div className="intro-points">
-                <span>No signup</span>
-                <span>No uploads</span>
-                <span>Free to use</span>
-              </div>
             </div>
             <div
               className="hero-art"
               aria-label="Illustrative GST calculation at an example rate of 18 percent"
             >
-              <span className="art-caption">EXAMPLE CALCULATION</span>
               <div className="ledger-sheet">
                 <div className="ledger-heading">
                   <ToolIcon name="receipt" />
@@ -139,24 +126,14 @@ export default function Home() {
               )}
             </div>
             <div className="category-nav" role="group" aria-label="Filter tools by category">
-              {[{ id: 'all', label: 'All tools' }, ...toolCategories].map((item) => (
+              {[{ id: 'all', label: 'All tools', icon: 'grid' }, ...toolCategories].map((item) => (
                 <button
                   key={item.id}
                   type="button"
                   aria-pressed={category === item.id}
                   onClick={() => setCategory(item.id)}
                 >
-                  <ToolIcon
-                    name={
-                      item.id === 'all'
-                        ? 'grid'
-                        : item.id === 'gst'
-                          ? 'receipt'
-                          : item.id === 'loans'
-                            ? 'banknotes'
-                            : 'briefcase'
-                    }
-                  />
+                  <ToolIcon name={item.icon} />
                   <span>{item.label}</span>
                   <small>
                     {item.id === 'all'
@@ -213,27 +190,9 @@ export default function Home() {
                       </span>
                     </div>
                     <h3>{tool.name.replace(' Calculator', '')}</h3>
-                    <p>
-                      {tool.slug === 'gst-late-fee'
-                        ? 'Work out late filing fees and interest for your GST returns.'
-                        : tool.slug === 'gst-calculator'
-                        ? 'Add or remove GST on a bill with lines at different rates.'
-                        : tool.slug === 'advance-tax'
-                          ? 'Plan quarterly tax payments and compare old and new regimes.'
-                          : tool.slug === 'emi'
-                            ? 'Calculate monthly EMI, total interest and the repayment schedule.'
-                            : 'Estimate income and tax under section 58 (old 44AD and 44ADA).'}
-                    </p>
+                    <p>{tool.summary}</p>
                     <div className="tile-bottom">
-                      <span>
-                        {tool.slug === 'advance-tax' || tool.slug === 'presumptive-tax'
-                          ? 'Tax year 2026-27'
-                          : tool.slug === 'gst-calculator'
-                          ? 'CGST, SGST & IGST split'
-                          : tool.slug === 'emi'
-                            ? 'Repayment schedule'
-                            : 'Fee & interest breakdown'}
-                      </span>
+                      <span>{tool.output}</span>
                       <span className="tile-open">
                         Open tool
                         <ToolIcon name="arrow" />
@@ -257,10 +216,6 @@ export default function Home() {
               About the project <ToolIcon name="arrow" />
             </Link>
           </section>
-          <div className="workbench-footnote">
-            <span>Accounting and tax calculators for India.</span>
-            <span>No signup · No uploads · Free tools</span>
-          </div>
         </div>
       </div>
     </>

@@ -1,0 +1,79 @@
+/* Calculator result layouts: bordered figures, collapsible workings and formula lines. Theme tokens only. */
+
+/* Column headings stay on one line; figures already do not wrap. */
+.table-nowrap-head .breakdown-table th {
+  white-space: nowrap;
+}
+
+/* A chart or figure in the results, bordered like the result tables. */
+.result-figure {
+  min-width: 0;
+  padding: var(--space-5);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-panel);
+}
+
+/* One collapsible working per line of a bill. */
+.workings-list {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.workings-details {
+  min-width: 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-control);
+}
+.workings-details > summary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1) var(--space-3);
+  min-height: 44px;
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-control);
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  cursor: pointer;
+  list-style: none;
+}
+.workings-details > summary::-webkit-details-marker {
+  display: none;
+}
+.workings-details > summary::after {
+  content: '+';
+  margin-left: auto;
+  color: var(--action);
+  font-size: 1.125rem;
+  line-height: 1;
+}
+.workings-details[open] > summary::after {
+  content: '−';
+}
+.workings-details > summary:focus-visible {
+  outline: 3px solid var(--action);
+  outline-offset: 2px;
+}
+.workings-details-title {
+  color: var(--ink);
+  font-weight: 650;
+}
+.workings-details-meta {
+  color: var(--muted);
+}
+.workings-details-body {
+  padding: 0 var(--space-4) var(--space-4);
+}
+
+/* A formula shown after a table or a list of workings. */
+.formula-follow {
+  margin-top: var(--space-3);
+}
+/* Keeps a figure and its operator together, so a formula wraps between terms. */
+.formula-term {
+  white-space: nowrap;
+}

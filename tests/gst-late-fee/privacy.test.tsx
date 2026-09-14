@@ -36,14 +36,14 @@ it('calculates, copies and downloads without any network request', async () => {
       <Component />
     </MemoryRouter>
   );
-  fireEvent.change(screen.getByLabelText('Due Date'), { target: { value: '2026-05-20' } });
-  fireEvent.change(screen.getByLabelText('Actual Filing Date'), { target: { value: '2026-06-19' } });
-  fireEvent.change(screen.getByLabelText('Tax Paid in Cash'), { target: { value: '100000' } });
+  fireEvent.change(screen.getByLabelText('Due date'), { target: { value: '2026-05-20' } });
+  fireEvent.change(screen.getByLabelText('Actual filing date'), { target: { value: '2026-06-19' } });
+  fireEvent.change(screen.getByLabelText('Tax paid in cash'), { target: { value: '100000' } });
 
   await act(async () => {
     fireEvent.click(screen.getByRole('button', { name: 'Copy results' }));
   });
-  fireEvent.click(screen.getByRole('button', { name: 'Download CSV'}));
+  fireEvent.click(screen.getByRole('button', { name: 'Download CSV' }));
 
   expect(navigator.clipboard.writeText).toHaveBeenCalledWith(expect.stringContaining('Total: ₹ 2,979'));
   expect(blobs).toHaveLength(1);

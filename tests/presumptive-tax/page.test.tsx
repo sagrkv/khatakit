@@ -4,10 +4,12 @@ import { Component as Presumptive } from '../../src/tools/presumptive-tax/Presum
 import {
   blockNetwork,
   buttonNamed,
+  captureDownloads,
   choose,
   input,
   mockClipboard,
   mount,
+  readBlob,
   textOf,
   type,
   type Mounted,
@@ -51,7 +53,7 @@ describe('presumptive validation', () => {
     expect(textOf(page.node.querySelector('#cash-receipts-error'))).toBe(
       'Cash receipts cannot be more than gross receipts.'
     );
-    expect(textOf(results())).not.toContain('Presumptive Income');
+    expect(textOf(results())).not.toContain('Presumptive income');
   });
 
   it('explains negative amounts', () => {
@@ -63,12 +65,16 @@ describe('presumptive validation', () => {
 });
 
 describe('presumptive results', () => {
-  it('shows the 8% and 6% split, the 5% cash test and the 15 March due date', async () => {
-    const network = blockNetwork();
-    const writeText = mockClipboard();
+  function enterBusinessExample() {
     choose(page.node, '44AD');
     type(page.node, 'gross-receipts', '25000000');
     type(page.node, 'cash-receipts', '1000000');
+  }
+
+  it('shows the 8% and 6% split, the 5% cash test and the 15 March due date', async () => {
+    const network = blockNetwork();
+    const writeText = mockClipboard();
+    enterBusinessExample();
 
     const text = textOf(results());
     expect(text).toContain('8% of cash and other receipts (₹10,00,000)');
@@ -84,9 +90,36 @@ describe('presumptive results', () => {
     network.expectNoRequests();
   });
 
+  it('downloads the computation as CSV without any network request', async () => {
+    const network = blockNetwork();
+    const files = captureDownloads();
+    enterBusinessExample();
+
+    act(() => buttonNamed(page.node, 'Download CSV').click());
+    expect(files).toHaveLength(1);
+    expect(files[0].name).toBe('presumptive-tax-2026-27-44ad-new-regime.csv');
+    const csv = await readBlob(files[0].blob);
+    const lines = csv.trim().split('\r\n');
+    expect(lines.slice(0, 5)).toEqual([
+      'Presumptive tax,Tax year 2026-27',
+      'Scheme,"Section 58(2), business (old 44AD)"',
+      'Regime,New regime',
+      '',
+      'Particulars,Amount',
+    ]);
+    expect(lines[5]).toBe('Gross turnover,25000000');
+    expect(csv).toMatch(/"8% of cash and other receipts \(₹\s10,00,000\)",80000\r\n/);
+    expect(csv).toMatch(/"6% of bank and online receipts \(₹\s2,40,00,000\)",1440000\r\n/);
+    expect(csv).toContain('Presumptive income (taxable),1520000\r\n');
+    expect(csv).toContain('Health & Education Cess (4%),');
+    expect(lines.at(-2)).toBe('Total tax payable,112320');
+    expect(lines.at(-1)).toBe('Effective tax rate on gross receipts (%),0.45');
+    network.expectNoRequests();
+  });
+
   it('warns when receipts are above the limit', () => {
     type(page.node, 'gross-receipts', '6000000');
     type(page.node, 'cash-receipts', '600000');
-    expect(textOf(results())).toContain('Receipts Above the Limit');
+    expect(textOf(results())).toContain('Receipts above the limit');
   });
 });

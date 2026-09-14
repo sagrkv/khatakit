@@ -103,7 +103,7 @@
 .cell-sub {
   display: block;
   margin-top: 2px;
-  font-size: 0.6875rem;
+  font-size: var(--type-small);
   line-height: 1.5;
   color: var(--muted);
   white-space: normal;
@@ -114,10 +114,16 @@
   line-height: 1.6;
 }
 
+/* Side by side only when the results column itself has room for both. */
 .period-list {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--space-4);
+}
+@container results (width >= 48rem) {
+  .period-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 .period-card {
   min-width: 0;
@@ -204,11 +210,6 @@
   list-style: disc;
 }
 
-@media (max-width: 1100px) {
-  .period-list {
-    grid-template-columns: minmax(0, 1fr);
-  }
-}
 @media (prefers-reduced-motion: reduce) {
   .row-remove {
     transition: none;

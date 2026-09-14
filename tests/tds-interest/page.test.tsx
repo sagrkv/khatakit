@@ -55,6 +55,32 @@ describe('TDS interest page', () => {
     expect(node.querySelector('a[href="/advance-tax-calculator"]')).not.toBeNull();
   });
 
+  it('puts inputs beside results for one case and stacks them for many rows', () => {
+    const layout = () => node.querySelector('.calculator-layout')!;
+    const bulk = node.querySelector<HTMLInputElement>('input[type=radio][value="bulk"]')!;
+    const single = node.querySelector<HTMLInputElement>('input[type=radio][value="single"]')!;
+    expect(layout().classList).toContain('calculator-layout-split');
+
+    act(() => bulk.click());
+    expect(layout().classList).toContain('calculator-layout-stacked');
+    expect(layout().classList).not.toContain('calculator-layout-split');
+    expect(node.querySelector('.row-editor')!.closest('.calculator-output')).not.toBeNull();
+    expect(node.querySelector('.calculator-inputs .form-columns')).not.toBeNull();
+
+    act(() => single.click());
+    expect(layout().classList).toContain('calculator-layout-split');
+    expect(node.querySelector('.form-columns')).toBeNull();
+  });
+
+  it('offers a jump to the result only once there is one', () => {
+    expect(node.querySelector('.result-jump')).toBeNull();
+    setValue(node.querySelector('#tds-amount')!, '25000');
+    expect(node.querySelector('.result-jump')).toBeNull();
+    setValue(node.querySelector('#date-deducted')!, '2026-03-20');
+    setValue(node.querySelector('#date-deposited')!, '2026-05-05');
+    expect(node.querySelector('.result-jump')?.textContent).toContain('See result');
+  });
+
   it('calculates a single case with both month methods', () => {
     setValue(node.querySelector('#tds-amount')!, '25000');
     setValue(node.querySelector('#date-deducted')!, '2026-03-20');

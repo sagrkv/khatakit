@@ -1,3 +1,4 @@
+import { Fragment } from 'react';
 import BreakdownTable from '../../components/calculator/BreakdownTable';
 import { Notice } from '../../components/ui/Surface';
 import { formatCurrency } from '../../lib/utils/format';
@@ -25,6 +26,15 @@ export default function InterestWorking({ input, result }: Props) {
     );
   }
 
+  // Each term keeps its figure and operator together, so the line wraps between terms.
+  const terms = [
+    `${formatCurrency(result.cashTax)} ×`,
+    `${result.interestRate}% ×`,
+    `${result.interestDays} ÷ 365`,
+    `= ${formatWithPaise(result.interestExact)},`,
+    `rounded to ${formatCurrency(result.interest)}`,
+  ];
+
   return (
     <div>
       <h4 className="section-title">Interest</h4>
@@ -43,13 +53,16 @@ export default function InterestWorking({ input, result }: Props) {
             value: displayDate(result.interestTo),
           },
           { item: 'Days', value: `${result.interestDays} days` },
-          {
-            item: 'Calculation',
-            value: `${formatCurrency(result.cashTax)} × ${result.interestRate}% × ${result.interestDays} ÷ 365 = ${formatWithPaise(result.interestExact)}`,
-          },
         ]}
-        footer={{ item: 'Interest, rounded to the rupee', value: formatCurrency(result.interest) }}
       />
+      <p className="formula formula-follow">
+        {terms.map((term, index) => (
+          <Fragment key={index}>
+            {index > 0 && ' '}
+            <span className="formula-term">{term}</span>
+          </Fragment>
+        ))}
+      </p>
     </div>
   );
 }

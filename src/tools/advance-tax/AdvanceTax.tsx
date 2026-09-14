@@ -1,7 +1,6 @@
 import { useMemo, useState } from 'react';
 import CalculatorPage from '../../components/layout/CalculatorPage';
 import { TAX_YEAR_LABEL } from '../../lib/constants/tax-slabs';
-import { advanceTaxCitations } from '../../lib/legal/citations/advance-tax';
 import AdvanceTaxForm from './AdvanceTaxForm';
 import AdvanceTaxGuide from './AdvanceTaxGuide';
 import AdvanceTaxResults from './AdvanceTaxResults';
@@ -30,17 +29,10 @@ export function Component() {
       category="Income Tax"
       icon="calendar"
       period={TAX_YEAR_LABEL}
-      formTitle="Income Details"
+      formTitle="Income details"
       form={<AdvanceTaxForm form={form} errors={errors} onChange={setForm} />}
-      citations={advanceTaxCitations}
-      disclaimer={
-        <>
-          Tax calculations use the Income-tax Act, 2025 and Finance Act, 2026 rates for tax year
-          2026-27, for resident individuals. The calculator does not account for capital gains,
-          special incomes, AMT or interest under sections 424 and 425. For complete tax planning,
-          please consult a Chartered Accountant.
-        </>
-      }
+      hasResult={result !== null && Object.keys(errors).length === 0}
+      caveat="An estimate for resident individuals in tax year 2026-27."
       guide={<AdvanceTaxGuide />}
     >
       <AdvanceTaxResults input={input} result={result} errors={errors} />

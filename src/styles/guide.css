@@ -1,66 +1,23 @@
-/* Field validation, calculator guides, related links and the repayment chart. */
-.field-error {
-  margin-top: var(--space-2);
-  color: var(--warning-ink);
-  font-size: 0.75rem;
-  font-weight: 600;
-  line-height: 1.6;
-}
-.control[aria-invalid='true'] {
-  border-color: var(--warning-ink);
-  background: var(--warning);
-}
-.control[aria-invalid='true']:focus {
-  border-color: var(--warning-ink);
-}
-
-.validation-list {
-  display: grid;
-  gap: var(--space-1);
-  padding-left: var(--space-5);
-  list-style: disc;
-}
-.guide-prose .guide-references {
-  padding-left: 0;
-  list-style: none;
-  gap: var(--space-3);
-}
-.guide-references li {
-  display: grid;
-  gap: 2px;
-}
-.guide-references span:not([aria-hidden]) {
-  font-size: 0.75rem;
-  line-height: 1.6;
-  color: var(--muted);
-}
-.guide-prose a {
-  overflow-wrap: anywhere;
-}
-
-.result-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2);
-}
-
+/* Calculator guides, related links and the repayment chart. */
 .calculator-guide {
   margin-top: var(--space-10);
   padding-top: var(--space-8);
   border-top: 1px solid var(--border);
 }
 .guide-title {
+  max-width: var(--reading-width);
   color: var(--ink);
   font-size: clamp(1.25rem, 2.2vw, 1.5rem);
   font-weight: 800;
   letter-spacing: -0.035em;
   margin-bottom: var(--space-6);
 }
+/* One column at reading width: no half-width gaps, and lines stay readable. */
 .guide-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--space-6);
-  align-items: start;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-5);
+  max-width: var(--reading-width);
 }
 .guide-section {
   min-width: 0;
@@ -70,11 +27,8 @@
   padding: var(--space-6);
   box-shadow: var(--shadow-panel);
 }
-.guide-section-wide {
-  grid-column: 1 / -1;
-}
 .guide-prose {
-  font-size: 0.875rem;
+  font-size: 0.9375rem;
   line-height: 1.75;
 }
 .guide-prose > * + * {
@@ -98,6 +52,23 @@
 .guide-prose .breakdown-scroll {
   font-size: 0.8125rem;
 }
+.guide-prose a {
+  overflow-wrap: anywhere;
+}
+.guide-prose .guide-references {
+  padding-left: 0;
+  list-style: none;
+  gap: var(--space-3);
+}
+.guide-references li {
+  display: grid;
+  gap: 2px;
+}
+.guide-references span:not([aria-hidden]) {
+  font-size: var(--type-small);
+  line-height: 1.6;
+  color: var(--muted);
+}
 .guide-formula {
   background: var(--blue-soft);
   border: 1px solid var(--blue-border);
@@ -115,7 +86,7 @@
   margin-top: var(--space-3);
   padding-top: var(--space-3);
   border-top: 1px solid var(--blue-border);
-  font-size: 0.75rem;
+  font-size: var(--type-small);
   line-height: 1.7;
   color: var(--text);
 }
@@ -167,7 +138,7 @@
 }
 .related-tools small {
   display: block;
-  font-size: 0.75rem;
+  font-size: var(--type-small);
   line-height: 1.6;
 }
 
@@ -179,7 +150,7 @@
   flex-wrap: wrap;
   gap: var(--space-1) var(--space-4);
   min-height: 2.75rem;
-  font-size: 0.75rem;
+  font-size: var(--type-small);
   color: var(--text);
   font-variant-numeric: tabular-nums;
 }
@@ -239,21 +210,16 @@
   display: flex;
   justify-content: space-between;
   margin-top: var(--space-2);
-  font-size: 0.6875rem;
+  font-size: var(--type-small);
   color: var(--muted);
 }
 .year-chart figcaption {
   margin-top: var(--space-3);
-  font-size: 0.75rem;
+  font-size: var(--type-small);
   line-height: 1.7;
   color: var(--text);
 }
 
-@media (max-width: 900px) {
-  .guide-grid {
-    grid-template-columns: minmax(0, 1fr);
-  }
-}
 @media (max-width: 760px) {
   .guide-section {
     padding: var(--space-5);

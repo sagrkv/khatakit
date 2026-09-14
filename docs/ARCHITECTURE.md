@@ -40,7 +40,7 @@ khatakit/
 │   │   ├── brand/Logo.tsx
 │   │   ├── layout/             # RootLayout, Header, Footer, PageShell, CalculatorPage
 │   │   ├── ui/                 # NumberInput, DateInput, Select, RadioGroup, Button, Surface, ToolIcon, Disclaimer
-│   │   └── calculator/         # ResultCard, BreakdownTable, CopyButton, DownloadButton, LegalBasis,
+│   │   └── calculator/         # ResultCard, BreakdownTable, CopyButton, DownloadButton, ResultJump,
 │   │                           # CalculatorGuide, LoanBreakdown, RelatedTools, ValidationSummary
 │   ├── pages/
 │   │   ├── Home.tsx

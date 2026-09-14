@@ -60,7 +60,7 @@ export default function TdsGuide() {
         </p>
       </GuideSection>
 
-      <GuideSection title="Worked example" wide>
+      <GuideSection title="Worked example">
         <p>
           TDS of {formatRupees(w.amount)} became deductible on{' '}
           {formatDisplayDate(WORKED.input.deductibleOn)}, was deducted on{' '}
@@ -142,9 +142,14 @@ export default function TdsGuide() {
         <ul>
           <li>Dates from 1 April 2021 up to today.</li>
           <li>
-            TDS deposited by challan by the monthly due dates. Challan-cum-statement deductions (30
-            days from month end) and quarterly deposits allowed by the Assessing Officer are not
-            covered.
+            TDS deposited by challan by the monthly due dates. Calendar months follow the TRACES
+            help pages; 30-day months follow several tribunal rulings, so both answers are shown.
+          </li>
+          <li>
+            Not covered: deductions paid with a challan-cum-statement, due 30 days from month end
+            (rent, property, contract or professional payments by individuals, and crypto assets),
+            quarterly deposits allowed by the Assessing Officer, TCS, late filing fees and
+            penalties.
           </li>
           <li>
             The total is also shown rounded to the nearest ₹10 (section 288B of the 1961 Act,
@@ -152,12 +157,13 @@ export default function TdsGuide() {
             confirmed.
           </li>
           <li>
-            Rules were checked on 14 September 2026. Everything is calculated in your browser.
+            Rules were checked on 14 September 2026. Check any TRACES demand against its own
+            workings before paying.
           </li>
         </ul>
       </GuideSection>
 
-      <GuideSection title="References" wide>
+      <GuideSection title="References">
         <ul>
           {tdsInterestCitations.map(({ source }) => (
             <li key={source.id}>
@@ -183,7 +189,7 @@ export default function TdsGuide() {
         </ul>
       </GuideSection>
 
-      <GuideSection title="Related calculators" wide>
+      <GuideSection title="Related calculators">
         <RelatedTools
           slugs={['advance-tax', 'gst-late-fee', 'presumptive-tax']}
           reasons={{

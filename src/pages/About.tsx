@@ -1,7 +1,9 @@
+import { Link } from 'react-router-dom';
 import PageShell from '../components/layout/PageShell';
 import { Panel } from '../components/ui/Surface';
 import Disclaimer from '../components/ui/Disclaimer';
 import ToolIcon from '../components/ui/ToolIcon';
+import { tools } from '../data/tools';
 export default function About() {
   return (
     <>
@@ -20,11 +22,25 @@ export default function About() {
                 free calculators for taxes, loans and everyday accounting in India.
               </p>
               <p>
-                The current tools cover GST late fees and interest, advance tax, presumptive income
-                and loan EMI. Each calculator includes its assumptions and calculation breakdown.
+                Each calculator shows its workings, assumptions and sources. The calculators are
+                free to use and do not require an account.
               </p>
-              <p>The calculators are free to use and do not require an account.</p>
             </div>
+          </Panel>
+          <Panel title="Available calculators" icon="calculator">
+            <ul className="related-tools">
+              {tools.map((tool) => (
+                <li key={tool.slug}>
+                  <Link to={tool.path}>
+                    <ToolIcon name={tool.icon} />
+                    <span>
+                      <strong>{tool.name}</strong>
+                      <small>{tool.summary}</small>
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </Panel>
           <Panel title="Privacy" icon="shield">
             <div className="prose">

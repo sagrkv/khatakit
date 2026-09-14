@@ -1,9 +1,9 @@
 import { Notice } from './Surface';
 export default function Disclaimer({
-  title = 'Assumptions & limitations',
+  title,
   children,
 }: {
-  title?: string;
+  title: string;
   children: React.ReactNode;
 }) {
   return (

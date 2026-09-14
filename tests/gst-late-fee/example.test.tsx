@@ -60,7 +60,7 @@ describe('page content without any input', () => {
     expect(rates).toHaveTextContent('0.04% of turnover in the State');
     expect(rates).toHaveTextContent('₹ 10,000');
     const edges = screen.getByRole('region', { name: 'Edge cases' });
-    for (const phrase of ['Nil return', 'on the due date', 'Turnover in This State', 'electronic cash ledger', 'three years']) {
+    for (const phrase of ['Nil return', 'on the due date', 'Turnover in this State', 'electronic cash ledger', 'three years']) {
       expect(edges).toHaveTextContent(phrase);
     }
     expect(screen.getByRole('region', { name: 'Supported period and assumptions' })).toHaveTextContent(

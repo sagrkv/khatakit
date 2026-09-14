@@ -12,14 +12,6 @@ interface Props {
 
 export default function LateFeeWorking({ input, result }: Props) {
   const cap = capExplanation(input, result);
-  const head = (name: string, fee: number) => ({
-    head: name,
-    perDay: formatCurrency(result.lateFeePerDayPerHead),
-    days: String(result.daysLate),
-    before: formatCurrency(result.rawLateFeePerHead),
-    cap: formatCurrency(result.capPerHead),
-    payable: formatCurrency(fee),
-  });
 
   return (
     <>
@@ -51,22 +43,18 @@ export default function LateFeeWorking({ input, result }: Props) {
         <BreakdownTable
           caption="Late fee per head"
           columns={[
-            { key: 'head', label: 'Head', align: 'left' },
-            { key: 'perDay', label: 'Per day', align: 'right', mono: true },
-            { key: 'days', label: 'Days late', align: 'right', mono: true },
-            { key: 'before', label: 'Before cap', align: 'right', mono: true },
-            { key: 'cap', label: 'Cap', align: 'right', mono: true },
-            { key: 'payable', label: 'Payable', align: 'right', mono: true },
+            { key: 'item', label: 'Item', align: 'left' },
+            { key: 'value', label: 'Amount', align: 'right', mono: true },
           ]}
-          rows={[head('CGST', result.cgstLateFee), head('SGST/UTGST', result.sgstLateFee)]}
-          footer={{
-            head: 'Total',
-            perDay: formatCurrency(result.lateFeePerDay),
-            days: String(result.daysLate),
-            before: formatCurrency(result.rawLateFee),
-            cap: formatCurrency(result.lateFeeCapApplied),
-            payable: formatCurrency(result.cappedLateFee),
-          }}
+          rows={[
+            { item: 'Fee per day, per head', value: formatCurrency(result.lateFeePerDayPerHead) },
+            { item: 'Days late', value: `${result.daysLate} days` },
+            { item: 'Fee before the cap, per head', value: formatCurrency(result.rawLateFeePerHead) },
+            { item: 'Cap, per head', value: formatCurrency(result.capPerHead) },
+            { item: 'CGST late fee', value: formatCurrency(result.cgstLateFee) },
+            { item: 'SGST/UTGST late fee', value: formatCurrency(result.sgstLateFee) },
+          ]}
+          footer={{ item: 'Late fee', value: formatCurrency(result.cappedLateFee) }}
         />
       </div>
 

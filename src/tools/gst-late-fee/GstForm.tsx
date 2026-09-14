@@ -44,14 +44,14 @@ export default function GstForm({ input, errors, onChange }: GstFormProps) {
   return (
     <div className="form-stack">
       <Select
-        label="Return Type"
+        label="Return type"
         value={input.returnType}
         onChange={changeReturnType}
         options={GST_RETURN_TYPES}
       />
 
       <DateInput
-        label="Due Date"
+        label="Due date"
         value={input.dueDate}
         onChange={(v) => onChange({ ...input, dueDate: v })}
         helpText={DUE_DATE_HELP[input.returnType]}
@@ -59,7 +59,7 @@ export default function GstForm({ input, errors, onChange }: GstFormProps) {
       />
 
       <DateInput
-        label="Actual Filing Date"
+        label="Actual filing date"
         value={input.filingDate}
         onChange={(v) => onChange({ ...input, filingDate: v })}
         min={input.dueDate}
@@ -69,12 +69,12 @@ export default function GstForm({ input, errors, onChange }: GstFormProps) {
 
       {!isAnnual && (
         <RadioGroup
-          label="Filed As"
+          label="Filed as"
           value={input.isNilReturn ? 'nil' : 'non-nil'}
           onChange={(v) => onChange({ ...input, isNilReturn: v === 'nil' })}
           options={[
             { label: 'Regular', value: 'non-nil' },
-            { label: 'Nil Return', value: 'nil' },
+            { label: 'Nil return', value: 'nil' },
           ]}
           helpText={
             input.returnType === 'GSTR-1'
@@ -86,7 +86,7 @@ export default function GstForm({ input, errors, onChange }: GstFormProps) {
 
       {input.returnType === 'GSTR-3B' && !input.isNilReturn && (
         <NumberInput
-          label="Tax Paid in Cash"
+          label="Tax paid in cash"
           value={input.taxLiability}
           onChange={(v) => onChange({ ...input, taxLiability: v })}
           prefix="₹"
@@ -99,7 +99,7 @@ export default function GstForm({ input, errors, onChange }: GstFormProps) {
       {(isAnnual || !input.isNilReturn) && (
         <Select
           id="aggregate-turnover"
-          label={isAnnual ? 'Aggregate Turnover for the Year' : 'Aggregate Turnover (Previous Year)'}
+          label={isAnnual ? 'Aggregate turnover for the year' : 'Aggregate turnover (previous year)'}
           value={input.turnoverSlab}
           onChange={(v) => onChange({ ...input, turnoverSlab: v as GstInput['turnoverSlab'] })}
           options={slabs}
@@ -113,7 +113,7 @@ export default function GstForm({ input, errors, onChange }: GstFormProps) {
 
       {isAnnual && (
         <NumberInput
-          label="Turnover in This State"
+          label="Turnover in this State"
           value={input.stateTurnover ?? 0}
           onChange={(v) => onChange({ ...input, stateTurnover: v })}
           prefix="₹"

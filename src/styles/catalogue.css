@@ -85,22 +85,22 @@ button {
   gap: 30px;
   background: var(--peach);
   border-radius: var(--radius-hero);
-  margin: 28px 0 0;
-  padding: 48px 44px 42px;
+  margin: 24px 0 0;
+  padding: 32px 44px;
   align-items: center;
 }
 .workbench-kicker {
-  font-size: 10px;
-  letter-spacing: 0.13em;
+  font-size: 12px;
+  letter-spacing: 0.12em;
   font-weight: 700;
   color: var(--warm-text);
 }
 .workbench-intro h1 {
-  font-size: clamp(38px, 4.1vw, 59px);
+  font-size: clamp(36px, 3.7vw, 52px);
   line-height: 1.07;
   letter-spacing: -0.05em;
   font-weight: 800;
-  margin: 20px 0;
+  margin: 12px 0 14px;
 }
 .workbench-intro h1 span {
   color: var(--action);
@@ -113,61 +113,19 @@ button {
 }
 .workbench-description {
   font-size: 13px;
-  line-height: 1.85;
+  line-height: 1.75;
   color: var(--warm-text);
-  margin-top: 12px;
+  margin-top: 8px;
   max-width: 44ch;
-}
-.hero-action {
-  display: inline-flex;
-  align-items: center;
-  gap: 32px;
-  background: var(--action);
-  color: var(--surface);
-  padding: 14px 20px;
-  border-radius: var(--radius-control);
-  font-size: 13px;
-  font-weight: 650;
-  margin-top: 25px;
-  box-shadow: 0 3px 0 var(--action-hover);
-}
-.hero-action:hover {
-  background: var(--action-hover);
-}
-.hero-action svg {
-  width: 20px;
-  height: 20px;
-}
-.intro-points {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 13px;
-  margin-top: 19px;
-  font-size: 10px;
-  color: var(--warm-text);
-}
-.intro-points span::before {
-  content: '✓';
-  margin-right: 5px;
-  color: var(--sage-ink);
 }
 .hero-art {
   position: relative;
-  padding: 26px 16px 30px;
+  padding: 12px 16px 20px;
   min-width: 0;
-}
-.art-caption {
-  display: block;
-  font-size: 8px;
-  letter-spacing: 0.1em;
-  color: var(--warm-text);
-  text-align: center;
-  margin-bottom: 15px;
-  font-weight: 600;
 }
 .ledger-sheet {
   background: var(--paper);
-  padding: 24px;
+  padding: 18px 20px;
   border: 1px solid var(--peach-border);
   border-radius: 5px;
   transform: rotate(-3deg);
@@ -178,8 +136,8 @@ button {
   align-items: center;
   gap: 8px;
   border-bottom: 1px solid var(--border);
-  padding-bottom: 18px;
-  font-size: 8px;
+  padding-bottom: 10px;
+  font-size: 12px;
   letter-spacing: 0.06em;
   font-weight: 650;
 }
@@ -196,25 +154,25 @@ button {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin: 23px 0 18px;
+  margin: 12px 0 6px;
   font-size: 18px;
   font-weight: 700;
   letter-spacing: -0.03em;
 }
 .ledger-subheading span {
-  font-size: 9px;
+  font-size: 12px;
   letter-spacing: 0;
   font-weight: 500;
   color: var(--sage-ink);
   background: var(--sage-soft);
-  padding: 4px 6px;
+  padding: 2px 6px;
   border-radius: 3px;
 }
 .ledger-sheet dl > div {
   display: flex;
   justify-content: space-between;
   gap: 15px;
-  padding: 8px 0;
+  padding: 6px 0;
   border-bottom: 1px solid var(--border-subtle);
   font-size: 12px;
 }
@@ -228,43 +186,43 @@ button {
 .ledger-total {
   background: var(--blue-soft);
   border-top: 2px solid var(--action);
-  padding: 13px 14px;
-  margin-top: 20px;
+  padding: 10px 14px;
+  margin-top: 12px;
 }
 .ledger-total > span {
   display: block;
-  font-size: 10px;
+  font-size: 12px;
   color: var(--blue-ink);
 }
 .ledger-total strong {
   display: block;
-  font-size: 29px;
+  font-size: 26px;
   letter-spacing: -0.04em;
   font-variant-numeric: tabular-nums;
-  margin-top: 4px;
+  margin-top: 2px;
 }
 .ledger-total strong span {
-  font-size: 19px;
+  font-size: 18px;
   color: var(--blue-ink);
 }
 .ledger-sheet > p {
-  font-size: 9px;
+  font-size: 12px;
   color: var(--muted);
   text-align: center;
-  margin-top: 12px;
+  margin-top: 8px;
 }
 .art-sticker {
   display: inline-flex;
   align-items: center;
   gap: 8px;
   position: absolute;
-  bottom: 4px;
+  bottom: 2px;
   right: -1px;
   transform: rotate(5deg);
   background: var(--sage);
   color: var(--sage-ink);
   border: 1px solid var(--sage-border);
-  padding: 10px 17px;
+  padding: 8px 15px;
   border-radius: 4px;
   font-size: 12px;
   font-weight: 650;
@@ -282,7 +240,7 @@ button {
   transform: rotate(16deg);
 }
 .tool-directory {
-  padding: 42px 0 36px;
+  padding: 40px 0 36px;
   scroll-margin-top: 18px;
 }
 .directory-intro {
@@ -290,8 +248,8 @@ button {
   margin-bottom: 23px;
 }
 .directory-intro > p {
-  font-size: 9px;
-  letter-spacing: 0.13em;
+  font-size: 12px;
+  letter-spacing: 0.12em;
   color: var(--muted);
   font-weight: 650;
 }
@@ -299,7 +257,7 @@ button {
   font-size: 28px;
   font-weight: 750;
   letter-spacing: -0.04em;
-  margin-top: 9px;
+  margin-top: 8px;
 }
 .tool-search {
   display: flex;
@@ -312,9 +270,11 @@ button {
   border-radius: var(--radius-control);
   padding: 0 17px;
 }
+/* The whole field carries the focus ring, the same 2px ring as form controls. */
 .tool-search:focus-within {
   border-color: var(--action);
-  box-shadow: 0 0 0 3px var(--focus-shadow);
+  outline: 2px solid var(--action);
+  outline-offset: 1px;
 }
 .tool-search > svg {
   width: 20px;
@@ -352,14 +312,14 @@ button {
   color: var(--text);
   border-radius: 5px;
   padding: 9px 14px;
-  font-size: 12px;
+  font-size: 13px;
 }
 .category-nav button svg {
   width: 16px;
   height: 16px;
 }
 .category-nav button small {
-  font-size: 10px;
+  font-size: 12px;
 }
 .category-nav button[aria-pressed='true'] {
   background: var(--blue-soft);
@@ -386,7 +346,7 @@ button {
   letter-spacing: -0.03em;
 }
 .directory-toolbar h2 span {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 400;
   letter-spacing: 0;
   color: var(--muted);
@@ -453,7 +413,7 @@ button {
 }
 .tile-category {
   color: var(--text);
-  font-size: 10px;
+  font-size: 12px;
 }
 .tool-tile h3 {
   font-size: 20px;
@@ -464,7 +424,7 @@ button {
   font-size: 13px;
   line-height: 1.8;
   color: var(--text);
-  max-width: 43ch;
+  max-width: 46ch;
   margin: 8px 0 20px;
 }
 .tile-bottom {
@@ -477,14 +437,15 @@ button {
   gap: 12px;
 }
 .tile-bottom > span:first-child {
-  font-size: 10px;
+  font-size: 12px;
   color: var(--text);
 }
 .tile-open {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 11px;
+  flex-shrink: 0;
+  font-size: 12px;
   font-weight: 650;
   color: var(--action);
 }
@@ -532,6 +493,7 @@ button {
   background: var(--sage);
   border: 1px solid var(--sage-border);
   padding: 28px 30px;
+  margin-bottom: 40px;
   border-radius: var(--radius-panel);
   display: flex;
   justify-content: space-between;
@@ -545,7 +507,7 @@ button {
   margin-bottom: 8px;
 }
 .workbench-about p {
-  font-size: 12px;
+  font-size: 13px;
   line-height: 1.8;
   color: var(--sage-ink);
 }
@@ -553,7 +515,8 @@ button {
   display: flex;
   align-items: center;
   gap: 14px;
-  font-size: 12px;
+  min-height: 44px;
+  font-size: 13px;
   color: var(--sage-ink);
   font-weight: 600;
 }
@@ -562,14 +525,6 @@ button {
   height: 18px;
   flex-shrink: 0;
 }
-.workbench-footnote {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 22px 0 29px;
-  font-size: 10px;
-  color: var(--muted);
-}
 .site-footer {
   border-top: 1px solid var(--border);
   background: var(--surface-muted);
@@ -577,12 +532,12 @@ button {
 .site-footer > div {
   max-width: var(--page-width);
   margin: auto;
-  padding: 24px 40px;
+  padding: 14px 40px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 22px;
-  font-size: 11px;
+  font-size: 12px;
   color: var(--text);
 }
 .site-footer .brand-lockup {
@@ -596,33 +551,44 @@ button {
 .site-footer .brand-ledger {
   font-size: 17px;
 }
+.site-footer > div > a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
 .site-footer nav {
   display: flex;
-  gap: 22px;
+  flex-wrap: wrap;
+  column-gap: 22px;
+}
+/* 44px tap area from padding; negative margins keep the spacing between links. */
+.site-footer nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 var(--space-2);
+  margin: 0 calc(var(--space-2) * -1);
 }
 @media (max-width: 1050px) {
   .workbench-intro {
-    padding: 32px;
+    padding: 28px 32px;
     gap: 16px;
   }
   .hero-art {
     padding-left: 5px;
     padding-right: 5px;
   }
-  .ledger-sheet {
-    padding: 18px;
-  }
   .workbench-intro h1 {
-    font-size: 46px;
+    font-size: 44px;
   }
 }
 @media (max-width: 760px) {
   .site-header-inner {
-    height: 72px;
+    height: 64px;
     padding: 0 22px;
   }
   .site-header nav {
-    font-size: 12px;
+    font-size: 13px;
     gap: 22px;
   }
   .header-note {
@@ -640,33 +606,18 @@ button {
   }
   .workbench-intro {
     grid-template-columns: 1fr;
-    padding: 30px 25px;
-    margin-top: 20px;
-    gap: 16px;
+    padding: 24px;
+    margin-top: 16px;
+    gap: 12px;
   }
   .workbench-intro h1 {
-    font-size: 46px;
+    font-size: 42px;
   }
   .hero-art {
     max-width: 330px;
     width: 100%;
     margin: auto;
-    padding: 10px 15px 22px;
-  }
-  .art-caption {
-    display: none;
-  }
-  .ledger-sheet {
-    padding: 18px;
-  }
-  .ledger-heading {
-    padding-bottom: 11px;
-  }
-  .ledger-subheading {
-    margin: 14px 0 8px;
-  }
-  .ledger-total {
-    margin-top: 12px;
+    padding: 6px 15px 18px;
   }
   .art-scribble {
     display: none;
@@ -685,7 +636,7 @@ button {
   }
   .category-nav button {
     padding: 10px 11px;
-    min-height: 42px;
+    min-height: 44px;
   }
   .category-nav svg {
     display: none;
@@ -700,15 +651,13 @@ button {
     flex-direction: column;
     align-items: start;
     padding: 24px;
-    gap: 18px;
-  }
-  .workbench-footnote {
-    flex-direction: column;
-    gap: 7px;
+    margin-bottom: 28px;
+    gap: 12px;
   }
   .site-footer > div {
     flex-wrap: wrap;
-    padding: 24px 22px;
+    row-gap: 4px;
+    padding: 12px 22px 16px;
   }
   .site-footer > div > span:last-child {
     width: 100%;
@@ -722,14 +671,10 @@ button {
     display: none;
   }
   .workbench-intro h1 {
-    font-size: 42px;
+    font-size: 40px;
   }
   .hero-art {
     display: none;
-  }
-  .intro-points {
-    gap: 9px;
-    font-size: 9px;
   }
 }
 @media (prefers-reduced-motion: reduce) {

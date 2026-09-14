@@ -1,7 +1,6 @@
 import { useMemo, useState } from 'react';
 import CalculatorPage from '../../components/layout/CalculatorPage';
 import { TAX_YEAR_LABEL } from '../../lib/constants/tax-slabs';
-import { presumptiveTaxCitations } from '../../lib/legal/citations/presumptive-tax';
 import { calculatePresumptive } from './calc';
 import PresumptiveForm from './PresumptiveForm';
 import PresumptiveGuide from './PresumptiveGuide';
@@ -28,18 +27,10 @@ export function Component() {
       category="Income Tax"
       icon="briefcase"
       period={TAX_YEAR_LABEL}
-      formTitle={form.scheme === '44ADA' ? 'Professional Details' : 'Business Details'}
+      formTitle={form.scheme === '44ADA' ? 'Professional details' : 'Business details'}
       form={<PresumptiveForm input={form} errors={errors} onChange={setForm} />}
-      citations={presumptiveTaxCitations}
-      disclaimer={
-        <>
-          Calculations use section 58(2) of the Income-tax Act, 2025 for tax year 2026-27.
-          Professionals qualify with gross receipts up to ₹50 lakh, or ₹75 lakh if cash receipts
-          are 5% or less. Businesses qualify with turnover up to ₹2 crore, or ₹3 crore if cash
-          receipts are 5% or less. Old regime tax uses the below-60 slabs. Consult a CA for your
-          specific situation.
-        </>
-      }
+      hasResult={result !== null && Object.keys(errors).length === 0}
+      caveat="An estimate under section 58(2) for tax year 2026-27."
       guide={<PresumptiveGuide />}
     >
       <PresumptiveResults result={result} regime={form.regime} errors={errors} />

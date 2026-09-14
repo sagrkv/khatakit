@@ -19,22 +19,10 @@ export default function CalculatorGuide({
   );
 }
 
-export function GuideSection({
-  title,
-  wide = false,
-  children,
-}: {
-  title: string;
-  /** Spans both columns on wide screens. */
-  wide?: boolean;
-  children: ReactNode;
-}) {
+export function GuideSection({ title, children }: { title: string; children: ReactNode }) {
   const id = useId();
   return (
-    <section
-      className={`guide-section${wide ? ' guide-section-wide' : ''}`}
-      aria-labelledby={id}
-    >
+    <section className="guide-section" aria-labelledby={id}>
       <h3 id={id} className="section-title">
         {title}
       </h3>

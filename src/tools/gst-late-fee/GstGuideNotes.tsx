@@ -23,7 +23,7 @@ export default function GstGuideNotes() {
           <li>
             <strong>GSTR-9 turnover.</strong> The daily fee depends on aggregate turnover for the
             year of the return, across all registrations under the same PAN. The cap is a share of
-            turnover in the State of the registration, entered in Turnover in This State.
+            turnover in the State of the registration, entered in Turnover in this State.
           </li>
           <li>
             <strong>Interest only on cash paid.</strong> For a late GSTR-3B, interest is charged on
@@ -52,10 +52,12 @@ export default function GstGuideNotes() {
             One-off waivers, amnesty schemes and due date extensions are not applied. Enter the
             extended due date if there was one.
           </li>
+          <li>GSTR-9 is optional for aggregate turnover up to ₹2 crore.</li>
           <li>
             GSTR-4, GSTR-9C, CMP-08 and interest on wrongly availed input tax credit under section
             50(3) are not covered.
           </li>
+          <li>Check the amount on the GST portal before paying.</li>
         </ul>
       </GuideSection>
 

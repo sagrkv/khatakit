@@ -1,7 +1,6 @@
 import { useMemo, useRef, useState, useSyncExternalStore } from 'react';
 import CalculatorPage from '../../components/layout/CalculatorPage';
 import { EmptyState, Notice } from '../../components/ui/Surface';
-import { tdsInterestCitations } from '../../lib/legal/citations/tds-interest';
 import { toInputDateString } from '../../lib/utils/date';
 import BulkEditor from './BulkEditor';
 import BulkImport from './BulkImport';
@@ -115,13 +114,17 @@ export function Component() {
       <SingleResult result={singleOutcome} draft={singleDraft} options={options} />
     ) : null;
 
+  const hasResult =
+    mode === 'single' ? singleOutcome?.status === 'ok' : (sheet?.calculatedCount ?? 0) > 0;
+
   return (
     <CalculatorPage
       title="TDS Interest Calculator"
-      description="Work out interest on TDS deducted late (1% a month) or deposited late (1.5% a month), for one case or a sheet of rows. Shows the due date, each month counted, and the answer under both ways of counting months."
+      description="Interest on TDS deducted late (1% a month) or deposited late (1.5% a month), for one case or many rows."
       category="Income Tax"
       icon="clock"
       period="Dates from 1 April 2021"
+      layout={mode === 'single' ? 'split' : 'stacked'}
       formTitle={mode === 'single' ? 'TDS details' : 'Sheet settings'}
       form={
         <TdsForm
@@ -143,18 +146,8 @@ export function Component() {
           }
         />
       }
-      citations={tdsInterestCitations}
-      disclaimer={
-        <>
-          Calendar months are counted the way the TRACES help pages describe. Several tribunal
-          rulings count 30-day months instead, so both answers are shown. Covers TDS deposited by
-          challan by the monthly due dates, for dates from 1 April 2021. Not covered: deductions
-          paid with a challan-cum-statement (rent, property, and contract or professional payments
-          by individuals, and crypto assets), quarterly deposits allowed by the Assessing Officer,
-          TCS, late filing fees and penalties. Check any TRACES demand against its own workings
-          before paying.
-        </>
-      }
+      hasResult={hasResult}
+      caveat="Check any TRACES demand against its own workings before paying."
       guide={<TdsGuide />}
     >
       {mode === 'single' ? (

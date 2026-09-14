@@ -9,6 +9,8 @@ export interface Tool {
   slug: string;
   path: string;
   description: string;
+  /** One sentence for the homepage tile and the About page list. */
+  summary: string;
   seoTitle: string;
   seoDescription: string;
   /** Page module exporting `Component`. */
@@ -17,6 +19,7 @@ export interface Tool {
   tags: string[];
   category: 'gst' | 'income-tax' | 'loans';
   keywords: string[];
+  /** What the tool produces, shown at the foot of its homepage tile. */
   output: string;
 }
 
@@ -27,6 +30,7 @@ export const tools: Tool[] = [
     path: '/gst-late-fee-interest-calculator',
     description:
       'Late fee under section 47 and interest under section 50 for GSTR-3B, GSTR-1 and GSTR-9, with turnover caps and the three-year filing limit.',
+    summary: 'Work out the late fee and interest on a GSTR-3B, GSTR-1 or GSTR-9 filed late.',
     seoTitle: 'GST Late Fee & Interest Calculator 2026 - GSTR-3B, GSTR-1, GSTR-9 - Khatakit',
     seoDescription:
       'GST late fee and interest for GSTR-3B, GSTR-1 and GSTR-9. Turnover caps, nil returns, CGST and SGST split, dated workings and CSV download.',
@@ -46,7 +50,7 @@ export const tools: Tool[] = [
       'section 50',
       'goods and services tax',
     ],
-    output: 'Late fee and interest breakdown',
+    output: 'Late fee, interest and CGST/SGST split',
     tags: ['GST', 'Penalty', 'Interest'],
   },
   {
@@ -55,6 +59,7 @@ export const tools: Tool[] = [
     path: '/gst-calculator',
     description:
       'Add or remove GST on one amount or a whole bill with lines at different rates. CGST, SGST or IGST to the paisa, with any round-off shown.',
+    summary: 'Add or remove GST on one amount or a whole bill with lines at different rates.',
     seoTitle: 'GST Calculator - Add or Remove GST, Multiple Rates - Khatakit',
     seoDescription:
       'Add or remove GST on one amount or a whole bill with lines at 5%, 18% and 40%. CGST, SGST or IGST to the paisa, round-off shown, CSV download.',
@@ -81,6 +86,7 @@ export const tools: Tool[] = [
     path: '/advance-tax-calculator',
     description:
       'Compute quarterly advance tax instalments for tax year 2026-27. Compare old vs new regime side by side, with slab-wise workings.',
+    summary: 'Plan quarterly advance tax for tax year 2026-27 and compare the old and new regimes.',
     seoTitle: 'Advance Tax Calculator Tax Year 2026-27 - Old & New Regime - Khatakit',
     seoDescription:
       'Calculate advance tax instalments for tax year 2026-27 (FY 2026-27). Old vs new regime, rebate near ₹12 lakh, due dates and CSV download.',
@@ -96,7 +102,7 @@ export const tools: Tool[] = [
       'fy 2026-27',
       'section 408',
     ],
-    output: 'Quarterly payment schedule',
+    output: 'Instalments by due date',
     tags: ['Income Tax', 'Quarterly', 'Old vs New'],
   },
   {
@@ -105,6 +111,7 @@ export const tools: Tool[] = [
     path: '/emi-calculator',
     description:
       'Calculate loan EMI using the reducing balance method. Year-wise amortisation, principal and interest chart, and monthly schedule download.',
+    summary: 'Calculate the monthly EMI, total interest and repayment schedule for a loan.',
     seoTitle: 'EMI Calculator - Loan EMI Calculator with Amortization - Khatakit',
     seoDescription:
       'Calculate loan EMI with the reducing balance method. Matches the RBI Key Facts Statement example. Amortisation schedule and CSV download.',
@@ -121,6 +128,7 @@ export const tools: Tool[] = [
     path: '/presumptive-income-calculator',
     description:
       'Calculate presumptive income under section 58 (old 44AD for business, 44ADA for professionals). Turnover limits and tax estimate.',
+    summary: 'Estimate income and tax under section 58 (old 44AD and 44ADA) for tax year 2026-27.',
     seoTitle: 'Presumptive Tax Calculator - Section 58 (old 44ADA & 44AD) - Khatakit',
     seoDescription:
       'Calculate presumptive income under section 58 of the Income-tax Act, 2025 (old 44ADA for professionals and 44AD for businesses). 5% cash test and limits.',
@@ -137,6 +145,7 @@ export const tools: Tool[] = [
     path: '/tds-interest-calculator',
     description:
       'Interest on TDS deducted late (1%) or deposited late (1.5%), for one case or many rows. Due dates, months counted and a CSV or Excel download.',
+    summary: 'Work out interest on TDS deducted or deposited late, for one case or many rows.',
     seoTitle: 'TDS Interest Calculator - Late Deduction & Late Deposit, Bulk Rows - Khatakit',
     seoDescription:
       'Calculate TDS interest under section 201(1A) and section 398: 1% for late deduction, 1.5% for late deposit. Due dates, months by name, calendar and 30-day counts, CSV and Excel download.',
@@ -144,21 +153,28 @@ export const tools: Tool[] = [
     icon: 'clock',
     category: 'income-tax',
     keywords: ['tds', '201(1a)', 'section 398', 'late payment', 'late deduction', 'traces', 'challan', 'bulk', 'interest'],
-    output: 'Interest per row with due dates and months',
+    output: 'Interest with due dates and months counted',
     tags: ['TDS', 'Interest', 'Bulk'],
   },
 ];
 
 export const toolCategories = [
-  { id: 'gst', label: 'GST', description: 'Filing fees and interest, with the workings.' },
+  {
+    id: 'gst',
+    label: 'GST',
+    icon: 'receipt',
+    description: 'Filing fees and interest, with the workings.',
+  },
   {
     id: 'income-tax',
     label: 'Income Tax',
+    icon: 'briefcase',
     description: 'Plan tax payments for your income or business.',
   },
   {
     id: 'loans',
     label: 'Loans',
+    icon: 'banknotes',
     description: 'Understand monthly payments and the cost of borrowing.',
   },
 ] as const;
@@ -170,7 +186,9 @@ export function matchesTool(tool: Tool, query: string): boolean {
       .replace(/[^a-z0-9]+/g, ' ')
       .trim();
   const haystack = normalise(
-    [tool.name, tool.description, tool.output, ...tool.tags, ...tool.keywords].join(' ')
+    [tool.name, tool.description, tool.summary, tool.output, ...tool.tags, ...tool.keywords].join(
+      ' '
+    )
   );
   return normalise(query)
     .split(/\s+/)

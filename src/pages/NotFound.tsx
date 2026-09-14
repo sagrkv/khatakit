@@ -7,7 +7,6 @@ export default function NotFound() {
     <PageShell
       title="Page not found"
       description="This address does not match a page. You can find the available calculators in the tool catalogue."
-      eyebrow="Page not found"
       icon="search"
       reading
     >

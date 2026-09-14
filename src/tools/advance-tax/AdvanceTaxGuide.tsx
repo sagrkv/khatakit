@@ -70,7 +70,7 @@ export default function AdvanceTaxGuide() {
         </p>
       </GuideSection>
 
-      <GuideSection title="Worked example" wide>
+      <GuideSection title="Worked example">
         <p>
           A resident below 60 expects a salary of {rupees(ex.input.salaryIncome)} and{' '}
           {rupees(ex.otherIncome)} of other income, in the new regime. TDS for the year is{' '}
@@ -136,10 +136,12 @@ export default function AdvanceTaxGuide() {
             All income is taxed at slab rates. Capital gains and other special-rate income are not
             supported.
           </li>
+          <li>Alternative minimum tax is not calculated.</li>
           <li>
             Interest for missed or short instalments under sections 424 and 425 is not calculated.
           </li>
           <li>Income and tax are not rounded to the nearest ₹10.</li>
+          <li>For decisions about your own tax, consult a Chartered Accountant.</li>
         </ul>
       </GuideSection>
 

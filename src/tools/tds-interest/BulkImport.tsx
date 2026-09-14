@@ -40,7 +40,7 @@ export default function BulkImport({ status, onFile, onError }: Props) {
   }
 
   return (
-    <div className="field">
+    <div className="field form-span">
       <p className="field-label">Import rows</p>
       <div className="result-actions">
         <label className="button button-secondary upload-button">

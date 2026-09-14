@@ -21,7 +21,7 @@ export default function EmiForm({ form, errors, onChange }: EmiFormProps) {
     <div className="form-stack">
       <NumberInput
         id="loan-amount"
-        label="Loan Amount"
+        label="Loan amount"
         value={form.principal}
         onChange={(v) => onChange({ ...form, principal: v })}
         prefix="₹"
@@ -31,7 +31,7 @@ export default function EmiForm({ form, errors, onChange }: EmiFormProps) {
 
       <NumberInput
         id="annual-interest-rate"
-        label="Annual Interest Rate"
+        label="Annual interest rate"
         value={form.annualRate}
         onChange={(v) => onChange({ ...form, annualRate: v })}
         suffix="%"
@@ -43,7 +43,7 @@ export default function EmiForm({ form, errors, onChange }: EmiFormProps) {
 
       <div>
         <RadioGroup
-          label="Loan Tenure"
+          label="Loan tenure"
           value={form.tenureUnit}
           onChange={(v) => changeUnit(v as TenureUnit)}
           options={[
@@ -54,7 +54,7 @@ export default function EmiForm({ form, errors, onChange }: EmiFormProps) {
         <div className="form-followup">
           <NumberInput
             id="tenure"
-            label={form.tenureUnit === 'years' ? 'Tenure (Years)' : 'Tenure (Months)'}
+            label={form.tenureUnit === 'years' ? 'Tenure (years)' : 'Tenure (months)'}
             value={form.tenure}
             onChange={(v) => onChange({ ...form, tenure: v })}
             reportInvalid

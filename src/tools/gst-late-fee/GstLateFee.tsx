@@ -7,7 +7,6 @@ import type { GstInput } from './types';
 import GstForm from './GstForm';
 import GstResults from './GstResults';
 import GstGuide from './GstGuide';
-import { gstLateFeeCitations } from '../../lib/legal/citations/gst-late-fee';
 import { toInputDateString } from '../../lib/utils/date';
 
 const defaultInput: GstInput = {
@@ -68,18 +67,10 @@ export function Component() {
       category="GST"
       icon="receipt"
       period="Rules as at September 2026"
-      formTitle="Return Details"
+      formTitle="Return details"
       form={<GstForm input={input} errors={validation.errors} onChange={setInput} />}
-      citations={gstLateFeeCitations}
-      disclaimer={
-        <>
-          Figures follow sections 47 and 50 of the CGST Act and Notifications 76/2018, 19/2021,
-          20/2021 and 07/2023, as in force in September 2026. GSTR-9 is optional for aggregate
-          turnover up to ₹2 crore. Returns cannot be filed more than three years after the due
-          date. One-off waivers and amnesty schemes are not applied. Check the amount on the GST
-          portal before paying.
-        </>
-      }
+      hasResult={result !== null && validation.input !== null}
+      caveat="Check the amount on the GST portal before paying."
       guide={<GstGuide />}
     >
       {result && validation.input ? (

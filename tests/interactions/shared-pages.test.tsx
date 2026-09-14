@@ -30,13 +30,35 @@ it('accepts complete GST dates from an empty form and reveals results in the sha
       </MemoryRouter>
     )
   );
+  const output = () => node.querySelector('.calculator-output')!;
   expect(node.querySelector('.empty-state')).not.toBeNull();
+  expect(node.querySelector('.result-jump')).toBeNull();
+  expect(node.querySelector('.result-caveat')).toBeNull();
   setValue(node.querySelector('#due-date')!, '2026-05-20');
   setValue(node.querySelector('#actual-filing-date')!, '2026-05-30');
   expect(node.querySelector('.empty-state')).toBeNull();
-  expect(node.querySelector('.calculator-output')!.textContent).toContain('Late Fee and Interest');
+  expect(output().textContent).toContain('Late fee and interest');
   expect(node.querySelector('#actual-filing-date')!.getAttribute('min')).toBe('2026-05-20');
-  expect(node.querySelector('details.source-panel')).not.toBeNull();
+  expect(node.querySelector('.result-jump')?.getAttribute('href')).toBe('#results');
+  expect(node.querySelector('#results')?.closest('.calculator-output')).toBe(output());
+  expect(node.querySelector('.result-caveat a')?.getAttribute('href')).toBe('#guide');
+});
+it('keeps sources and assumptions in the guide, not repeated beside the results', () => {
+  act(() =>
+    root.render(
+      <MemoryRouter>
+        <Gst />
+      </MemoryRouter>
+    )
+  );
+  const output = node.querySelector('.calculator-output')!.textContent;
+  expect(output).not.toContain('Sources & calculation basis');
+  expect(output).not.toContain('Assumptions & limitations');
+  expect(node.querySelector('.source-panel')).toBeNull();
+  const guideHeadings = Array.from(node.querySelectorAll('#guide h3'), (h) => h.textContent);
+  expect(guideHeadings).toContain('References');
+  expect(guideHeadings.some((heading) => heading?.includes('assumptions'))).toBe(true);
+  expect(node.textContent!.match(/in your browser/g)).toHaveLength(1);
 });
 it('keeps native radio groups independent while changing the calculator form', () => {
   act(() =>
@@ -50,7 +72,7 @@ it('keeps native radio groups independent while changing the calculator form', (
   act(() => business.click());
   expect(business.checked).toBe(true);
   expect(node.querySelector('#cash-receipts')).not.toBeNull();
-  expect(node.querySelector('.panel-title')!.textContent).toContain('Business Details');
+  expect(node.querySelector('.panel-title')!.textContent).toContain('Business details');
   const old = node.querySelector('input[type=radio][value="old"]') as HTMLInputElement;
   act(() => old.click());
   expect(old.checked).toBe(true);

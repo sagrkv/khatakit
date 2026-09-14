@@ -58,7 +58,7 @@ describe('advance tax validation', () => {
     expect(textOf(page.node.querySelector('#salary-income-error'))).toBe(
       'Salary or pension cannot be more than gross total income.'
     );
-    expect(textOf(results())).not.toContain('Advance Tax Schedule');
+    expect(textOf(results())).not.toContain('Advance tax schedule');
   });
 
   it('explains text that is not a number', () => {
@@ -94,7 +94,7 @@ describe('advance tax results', () => {
     enterWorkedExample();
     select(page.node, 'age-category', '60to80');
     expect(page.node.querySelector<HTMLInputElement>('input[type=radio][value="no"]')!.checked).toBe(true);
-    expect(textOf(results())).toContain('Advance Tax Not Applicable');
+    expect(textOf(results())).toContain('Advance tax not applicable');
     expect(textOf(results())).not.toContain('15 June 2026');
     choose(page.node, 'yes');
     expect(textOf(results())).toContain('15 June 2026');

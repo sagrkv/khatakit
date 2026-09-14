@@ -36,13 +36,13 @@ export default function AdvanceTaxResults({ input, result, errors }: AdvanceTaxR
     <div className="result-stack">
       <div className="result-grid">
         <ResultCard
-          label="Net Tax Payable"
+          label="Net tax payable"
           value={formatCurrency(selected.netTaxPayable)}
           variant={selected.netTaxPayable === 0 ? 'success' : 'primary'}
           subtext={`${selectedName} regime, after TDS`}
         />
         <ResultCard
-          label={savings > 0 ? 'You Save (vs other regime)' : 'Comparison'}
+          label={savings > 0 ? 'You save (vs other regime)' : 'Comparison'}
           value={formatCurrency(Math.abs(savings))}
           variant={savings > 0 ? 'success' : 'neutral'}
           subtext={
@@ -58,7 +58,7 @@ export default function AdvanceTaxResults({ input, result, errors }: AdvanceTaxR
       {result.schedule.length > 0 && (
         <div>
           <div className="section-heading">
-            <h3 className="section-title">Advance Tax Schedule</h3>
+            <h3 className="section-title">Advance tax schedule</h3>
             <div className="result-actions">
               <CopyButton text={advanceTaxText(result)} label="Copy" />
               <DownloadButton
@@ -71,9 +71,9 @@ export default function AdvanceTaxResults({ input, result, errors }: AdvanceTaxR
           <BreakdownTable
             columns={[
               { key: 'quarter', label: 'Instalment', align: 'left' },
-              { key: 'dueDate', label: 'Due Date', align: 'left' },
+              { key: 'dueDate', label: 'Due date', align: 'left' },
               { key: 'percent', label: 'Cumulative %', align: 'right', mono: true },
-              { key: 'installment', label: 'Amount Due', align: 'right', mono: true },
+              { key: 'installment', label: 'Amount due', align: 'right', mono: true },
               { key: 'cumulative', label: 'Cumulative', align: 'right', mono: true },
             ]}
             rows={result.schedule.map((q) => ({
@@ -94,7 +94,7 @@ export default function AdvanceTaxResults({ input, result, errors }: AdvanceTaxR
       )}
 
       {!selected.isAdvanceTaxApplicable && (
-        <Notice title="Advance Tax Not Applicable" tone="success">
+        <Notice title="Advance tax not applicable" tone="success">
           {selected.seniorCitizenExempt
             ? 'Resident individuals aged 60 or more with no business or professional income do not pay advance tax. Pay any tax due as self-assessment tax before filing your return.'
             : `Net tax after TDS is ${formatCurrency(selected.netTaxPayable)}. Advance tax applies only at ₹10,000 or more.`}

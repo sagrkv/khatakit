@@ -1,9 +1,10 @@
 import type { ReactNode } from 'react';
-import type { LegalCitation } from '../../lib/legal/types';
 import PageShell from './PageShell';
-import LegalBasis from '../calculator/LegalBasis';
-import Disclaimer from '../ui/Disclaimer';
+import ResultJump from '../calculator/ResultJump';
 import { Panel } from '../ui/Surface';
+
+const RESULTS_ID = 'results';
+
 interface Props {
   title: string;
   description: string;
@@ -13,11 +14,16 @@ interface Props {
   formTitle: string;
   form: ReactNode;
   children: ReactNode;
-  citations: LegalCitation[];
-  disclaimer: ReactNode;
-  /** Formula, worked example and references, shown below the calculator. */
-  guide?: ReactNode;
+  /** True once the results area shows a calculated answer. */
+  hasResult: boolean;
+  /** One short line shown under a result. Full assumptions and sources live in the guide. */
+  caveat: string;
+  /** Split puts inputs beside the results. Stacked gives inputs the full width with results below. */
+  layout?: 'split' | 'stacked';
+  /** Formula, worked example, assumptions and references, shown below the calculator. */
+  guide: ReactNode;
 }
+
 export default function CalculatorPage({
   title,
   description,
@@ -27,8 +33,9 @@ export default function CalculatorPage({
   formTitle,
   form,
   children,
-  citations,
-  disclaimer,
+  hasResult,
+  caveat,
+  layout = 'split',
   guide,
 }: Props) {
   return (
@@ -39,22 +46,33 @@ export default function CalculatorPage({
       icon={icon}
       period={period}
     >
-      <div className="calculator-layout">
+      <div className={`calculator-layout calculator-layout-${layout}`}>
         <aside className="calculator-inputs">
           <Panel title={formTitle} icon={icon}>
             {form}
             <p className="local-note">Calculations stay in your browser.</p>
           </Panel>
+          {hasResult && <ResultJump target={RESULTS_ID} />}
         </aside>
         <div className="calculator-output">
-          <section aria-label="Calculation results" className="result-stack">
+          <section
+            id={RESULTS_ID}
+            tabIndex={-1}
+            aria-label="Calculation results"
+            className="result-stack"
+          >
             {children}
           </section>
-          <LegalBasis citations={citations} />
-          <Disclaimer>{disclaimer}</Disclaimer>
+          {hasResult && (
+            <p className="result-caveat">
+              {caveat} <a href="#guide">Assumptions and sources</a>
+            </p>
+          )}
         </div>
       </div>
-      {guide}
+      <div id="guide" className="guide-anchor">
+        {guide}
+      </div>
     </PageShell>
   );
 }

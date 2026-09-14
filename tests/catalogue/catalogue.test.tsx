@@ -63,4 +63,19 @@ describe('tool discovery', () => {
     expect(toolLinks()).toHaveLength(1);
     expect(toolLinks()[0].getAttribute('href')).toBe('/presumptive-income-calculator');
   });
+  it('describes every tile with its own catalogue text', () => {
+    expect(new Set(tools.map((tool) => tool.summary)).size).toBe(tools.length);
+    for (const tool of tools) {
+      const tile = container.querySelector(`#tools a[href="${tool.path}"]`);
+      expect(tile?.querySelector('p')?.textContent, tool.slug).toBe(tool.summary);
+      expect(tile?.querySelector('.tile-bottom span')?.textContent, tool.slug).toBe(tool.output);
+    }
+    const tds = container.querySelector('#tools a[href="/tds-interest-calculator"]')!;
+    expect(tds.textContent).toContain('TDS');
+    expect(tds.textContent).not.toContain('section 58');
+  });
+  it('states the free, no-signup message at most once and has no separate browse button', () => {
+    expect(container.textContent).not.toContain('No signup');
+    expect(container.textContent).not.toContain('Browse tools');
+  });
 });

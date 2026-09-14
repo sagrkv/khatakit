@@ -61,7 +61,7 @@ export default function PresumptiveGuide() {
         </p>
       </GuideSection>
 
-      <GuideSection title="Worked example" wide>
+      <GuideSection title="Worked example">
         <p>
           A business has turnover of {rupees(biz.input.grossReceipts)}, of which{' '}
           {rupees(biz.input.cashReceipts)} came in cash. It uses the new regime and has no other
@@ -121,6 +121,7 @@ export default function PresumptiveGuide() {
           <li>Whether your profession is listed in section 62(4) is not checked.</li>
           <li>Goods carriages (section 58(2) Table serial 2) are not supported.</li>
           <li>The five-year lock-in in sections 58(7) and 58(8) is not checked.</li>
+          <li>For decisions about your own tax, consult a Chartered Accountant.</li>
         </ul>
       </GuideSection>
 
